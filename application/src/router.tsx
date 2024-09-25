@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Auth from "./layouts/Auth";
 import Login from './views/Login';
-import Dashboard from './layouts/Dashboard';
+import Main from './layouts/Main';
+import Dashboard from './views/Dashboard';
 
 const router = createBrowserRouter([
 	{
@@ -16,7 +17,13 @@ const router = createBrowserRouter([
 	},
 	{
 		path:"/",
-		element:<Dashboard/>
+		element:<Main/>,
+		children:[
+			{
+				index:true,
+				element:<Dashboard/>
+			}
+		]
 	}
 ]);
 
