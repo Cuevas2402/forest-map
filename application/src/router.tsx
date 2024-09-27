@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Auth from "./layouts/Auth";
 import Login from './views/Login';
-import Main from './layouts/Main';
-import Dashboard from './views/Dashboard';
+import Main from './layouts/main/Main';
+import Dashboard from './views/dashboard/Dashboard';
 
 const router = createBrowserRouter([
 	{
