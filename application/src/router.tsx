@@ -3,6 +3,7 @@ import Auth from "./layouts/Auth";
 import Login from './views/Login';
 import Main from './layouts/main/Main';
 import Dashboard from './views/dashboard/Dashboard';
+import Trees from './views/trees/Trees';
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 			{
 				index:true,
 				element:<Dashboard/>
+			},
+			{
+				path:"/trees",
+				element:<Trees/>
 			}
 		]
 	}
