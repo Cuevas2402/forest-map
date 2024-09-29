@@ -9,10 +9,11 @@ import NavLink from "./NavLink"
 
 export default function NavBar(){
 
+
 	const tabs = [
-		{icon: "package", label : "Dashboard", href: "a" , isactive : true},
-		{icon: "trees", label : "Trees", href: "a" , isactive : false},
-		{icon: "users", label : "Users", href: "a" , isactive : false},
+		{icon: "package", label : "Dashboard", href: "/" , isactive : true},
+		{icon: "trees", label : "Trees", href: "/trees" , isactive : false},
+		{icon: "users", label : "Users", href: "/users" , isactive : false},
 		{icon: "linechart", label : "Analytics", href: "a" , isactive : false},
 	]
 	return (

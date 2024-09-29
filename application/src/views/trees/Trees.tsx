@@ -7,7 +7,7 @@ import ZonesTable from "./parts/ZonesTable";
 export default function Trees(){
 	return (
 		<>
-			<div className="h-2/6 p-5">
+			<div className="p-5">
 
 
 				<div className="h-auto w-full mb-5 grid gap-4 grid-cols-4 grid-rows-2">

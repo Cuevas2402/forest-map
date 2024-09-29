@@ -7,6 +7,8 @@ import {
 	Users,
 	TreeDeciduous
 } from "lucide-react"
+import { Link } from "react-router-dom";
+
 
 
 interface LinkProps {
@@ -22,8 +24,8 @@ export default function ({icon, label, href, isactive} : LinkProps){
 
 	return (
 		<>
-			<a
-				href={href}
+			<Link
+				to={href}
 				className={isactive ? csscl + " bg-black text-white  hover:text-neutral" : csscl + "hover:text-white hover:bg-black"}
 			>
 				{(() => {
@@ -58,7 +60,7 @@ export default function ({icon, label, href, isactive} : LinkProps){
 				{label}	
 
 				
-			</a>
+			</Link>
 		
 		</>
 	)
