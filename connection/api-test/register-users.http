@@ -1,0 +1,247 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+    "users": [
+        {
+            "id": 1,
+            "firstName": "Emily",
+            "lastName": "Johnson",
+            "email": "emily.johnson@gmail.com",
+            "password": "emilyspass",
+            "role": "admin"
+        },
+        {
+            "id": 2,
+            "firstName": "Michael",
+            "lastName": "Williams",
+            "email": "michael.williams@gmail.com",
+            "password": "michaelwpass",
+            "role": "admin"
+        },
+        {
+            "id": 3,
+            "firstName": "Sophia",
+            "lastName": "Brown",
+            "email": "sophia.brown@gmail.com",
+            "password": "sophiabpass",
+            "role": "user"
+        },
+        {
+            "id": 4,
+            "firstName": "James",
+            "lastName": "Davis",
+            "email": "james.davis@gmail.com",
+            "password": "jamesdpass",
+            "role": "user"
+        },
+        {
+            "id": 5,
+            "firstName": "Emma",
+            "lastName": "Miller",
+            "email": "emma.miller@gmail.com",
+            "password": "emmajpass",
+            "role": "user"
+        },
+        {
+            "id": 6,
+            "firstName": "Olivia",
+            "lastName": "Wilson",
+            "email": "olivia.wilson@gmail.com",
+            "password": "oliviawpass",
+            "role": "user"
+        },
+        {
+            "id": 7,
+            "firstName": "Alexander",
+            "lastName": "Jones",
+            "email": "alexander.jones@gmail.com",
+            "password": "alexanderjpass",
+            "role": "user"
+        },
+        {
+            "id": 8,
+            "firstName": "Ava",
+            "lastName": "Taylor",
+            "email": "ava.taylor@gmail.com",
+            "password": "avatpass",
+            "role": "user"
+        },
+        {
+            "id": 9,
+            "firstName": "Ethan",
+            "lastName": "Martinez",
+            "email": "ethan.martinez@gmail.com",
+            "password": "ethanmpass",
+            "role": "user"
+        },
+        {
+            "id": 10,
+            "firstName": "Isabella",
+            "lastName": "Anderson",
+            "email": "isabella.anderson@gmail.com",
+            "password": "isabelladpass",
+            "role": "user"
+        },
+        {
+            "id": 11,
+            "firstName": "Liam",
+            "lastName": "Garcia",
+            "email": "liam.garcia@gmail.com",
+            "password": "liamgpass",
+            "role": "user"
+        },
+        {
+            "id": 12,
+            "firstName": "Mia",
+            "lastName": "Rodriguez",
+            "email": "mia.rodriguez@gmail.com",
+            "password": "miarpass",
+            "role": "user"
+        },
+        {
+            "id": 13,
+            "firstName": "Noah",
+            "lastName": "Hernandez",
+            "email": "noah.hernandez@gmail.com",
+            "password": "noahhpass",
+            "role": "user"
+        },
+        {
+            "id": 14,
+            "firstName": "Charlotte",
+            "lastName": "Lopez",
+            "email": "charlotte.lopez@gmail.com",
+            "password": "charlottempass",
+            "role": "user"
+        },
+        {
+            "id": 15,
+            "firstName": "William",
+            "lastName": "Gonzalez",
+            "email": "william.gonzalez@gmail.com",
+            "password": "williamgpass",
+            "role": "user"
+        },
+        {
+            "id": 16,
+            "firstName": "Avery",
+            "lastName": "Perez",
+            "email": "avery.perez@gmail.com",
+            "password": "averyppass",
+            "role": "user"
+        },
+        {
+            "id": 17,
+            "firstName": "Evelyn",
+            "lastName": "Sanchez",
+            "email": "evelyn.sanchez@gmail.com",
+            "password": "evelynspass",
+            "role": "admin"
+        },
+        {
+            "id": 18,
+            "firstName": "Logan",
+            "lastName": "Torres",
+            "email": "logan.torres@gmail.com",
+            "password": "logantpass",
+            "role": "user"
+        },
+        {
+            "id": 19,
+            "firstName": "Abigail",
+            "lastName": "Rivera",
+            "email": "abigail.rivera@gmail.com",
+            "password": "abigailrpass",
+            "role": "user"
+        },
+        {
+            "id": 20,
+            "firstName": "Jackson",
+            "lastName": "Evans",
+            "email": "jackson.evans@gmail.com",
+            "password": "jacksonepass",
+            "role": "user"
+        },
+        {
+            "id": 21,
+            "firstName": "Madison",
+            "lastName": "Collins",
+            "email": "madison.collins@gmail.com",
+            "password": "madisoncpass",
+            "role": "user"
+        },
+        {
+            "id": 22,
+            "firstName": "Elijah",
+            "lastName": "Stewart",
+            "email": "elijah.stewart@gmail.com",
+            "password": "elijahspass",
+            "role": "user"
+        },
+        {
+            "id": 23,
+            "firstName": "Chloe",
+            "lastName": "Morales",
+            "email": "chloe.morales@gmail.com",
+            "password": "chloempass",
+            "role": "user"
+        },
+        {
+            "id": 24,
+            "firstName": "Mateo",
+            "lastName": "Nguyen",
+            "email": "mateo.nguyen@gmail.com",
+            "password": "mateonpass",
+            "role": "user"
+        },
+        {
+            "id": 25,
+            "firstName": "Harper",
+            "lastName": "Kelly",
+            "email": "harper.kelly@gmail.com",
+            "password": "harperepass",
+            "role": "user"
+        },
+        {
+            "id": 26,
+            "firstName": "Evelyn",
+            "lastName": "Gonzalez",
+            "email": "evelyn.gonzalez@gmail.com",
+            "password": "evelyngpass",
+            "role": "user"
+        },
+        {
+            "id": 27,
+            "firstName": "Daniel",
+            "lastName": "Cook",
+            "email": "daniel.cook@gmail.com",
+            "password": "danielcpass",
+            "role": "user"
+        },
+        {
+            "id": 28,
+            "firstName": "Lily",
+            "lastName": "Lee",
+            "email": "lily.lee@gmail.com",
+            "password": "lilybpass",
+            "role": "user"
+        },
+        {
+            "id": 29,
+            "firstName": "Henry",
+            "lastName": "Hill",
+            "email": "henry.hill@gmail.com",
+            "password": "henryhpass",
+            "role": "user"
+        },
+        {
+            "id": 30,
+            "firstName": "Addison",
+            "lastName": "Wright",
+            "email": "addison.wright@gmail.com",
+            "password": "addisonwpass",
+            "role": "user"
+        }
+    ]
+}

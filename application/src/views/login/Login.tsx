@@ -1,11 +1,37 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuth } from "@/hooks/useAuth";
+import { createRef, useState } from "react"
+import LoginAlert from "./parts/LoginAlert";
 
 export default function Login(){
+
+	const usernameRef : any = createRef();
+	const passwordRef : any = createRef();
+	
+	const [errors, setErrors]: [string[], React.Dispatch<React.SetStateAction<string[]>>] = useState<string[]>([]);
+
+	const {login} = useAuth({
+		middleware:'guest',
+		url:'/'
+	})
+
+	const handleSubmit = async (e : any) => {
+		e.preventDefault();
+
+		const data = {
+			username : usernameRef.current.value,
+			password : passwordRef.current.value
+		}
+
+		login(data, setErrors)
+
+	}
+
 	return (
 		<>
-			<form action="">
+			<form onSubmit={handleSubmit}>
 
 				<div className="mx-auto grid w-[350px] gap-6">
 					<div className="grid gap-2 text-center">
@@ -14,6 +40,17 @@ export default function Login(){
 						Enter your username below to login to your account
 						</p>
 					</div>
+
+					<div className={`grid ${errors ? null : " hidden "}`}>
+						{
+
+							errors ? (
+								errors.map((error, i) => {
+									return <LoginAlert key={i} message={error}></LoginAlert>;
+								})
+							) : null
+						}
+					</div>
 					<div className="grid gap-4">
 						<div className="grid gap-2">
 						<Label htmlFor="email">Username</Label>
@@ -21,6 +58,7 @@ export default function Login(){
 							id="username"
 							type="username"
 							placeholder=""
+							ref={usernameRef}
 							required
 						/>
 						</div>
@@ -34,7 +72,7 @@ export default function Login(){
 							Forgot your password?
 							</a>
 						</div>
-						<Input id="password" type="password" required />
+						<Input id="password" type="password" ref={passwordRef} required />
 						</div>
 						<Button type="submit" className="w-full">
 						Login
