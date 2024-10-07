@@ -1,5 +1,5 @@
 import client from "@/config/axios";
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from 'swr';
 
@@ -9,8 +9,8 @@ interface AuthProps {
 }
 
 interface LoginData{
-	username : string;
-	password : string;
+	email : string | undefined;
+	password : string | undefined;
 }
 
 export const useAuth  = ({middleware, url} : AuthProps) => {
@@ -18,10 +18,10 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 
 	const navigate = useNavigate();
 
-    const {data : user, error, mutate} = useSWR('/api/user',() => 
-        client('/api/user',{
+    const {data : user, error, mutate} = useSWR('/user' ,() => 
+        client('/user',{
             headers : {
-                Authorization : `Bearer ${localStorage.getItem('AUTH_TOKEN')}`,
+                Authorization : `Bearer ${localStorage.getItem('token')}`,
             }
         })
         .then(res => res.data)
@@ -33,10 +33,10 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     const login = async (datos : LoginData, setErrores : React.Dispatch<React.SetStateAction<string[]>>) => {
 
 		try{
-			const {data} = await client.post('/api/login', datos);
-			localStorage.setItem('AUTH_TOKEN', data.token);
+			const {data} = await client.post('/auth', datos);
+			localStorage.setItem('token', data.token);
 			setErrores([]);
-            await mutate();
+            mutate();
 		}catch (error){
 			setErrores(['Error al hacer login']);
 		}
@@ -46,13 +46,13 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     const logout = async () => {
 
         try{
-            await client.post('/api/logout', null, {
+            await client.post('/auth', null, {
                 headers : {
                     Authorization : `Bearer ${localStorage.getItem('AUTH_TOKEN')}`,
                 }
             })
-            localStorage.removeItem('AUTH_TOKEN');
-            await mutate(undefined);
+            localStorage.removeItem('token');
+            mutate(undefined);
         } catch (error) {
             throw Error();
         }
@@ -60,14 +60,16 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     }
 
     useEffect(()=>{
+
+        console.log(user)
         if(middleware === 'guest' && url && user){
             navigate(url);
         }
 
-        if(middleware === 'auth' && error)  {
-            navigate('/auth/login');
+        if(middleware === 'auth' && error) {
+            navigate('/auth');
         }
-    }, [user, error]);
+    }, [user, error, middleware, url, navigate]);
 
     return {
         login, 

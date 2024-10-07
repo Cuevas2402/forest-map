@@ -1,31 +1,45 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useAuth } from "@/hooks/useAuth";
 import { createRef, useState } from "react"
 import LoginAlert from "./parts/LoginAlert";
+import { useAuth } from "@/hooks/useAuth";
+
 
 export default function Login(){
 
-	const usernameRef : any = createRef();
-	const passwordRef : any = createRef();
+	const { login } = useAuth({
+		middleware:"guest",
+		url:"/"
+	})
+
+	const usernameRef = createRef<HTMLInputElement>();
+	const passwordRef = createRef<HTMLInputElement>();
 	
 	const [errors, setErrors]: [string[], React.Dispatch<React.SetStateAction<string[]>>] = useState<string[]>([]);
 
-	const {login} = useAuth({
-		middleware:'guest',
-		url:'/'
-	})
 
-	const handleSubmit = async (e : any) => {
+    /*const login = async (datos : LoginData, setErrores : React.Dispatch<React.SetStateAction<string[]>>) => {
+
+		try{
+			console.log(datos)
+			const {data} = await client.post('/auth', datos);
+			localStorage.setItem('token', data.token);
+			setErrores([]);
+		}catch (error){
+			setErrores(['Error al hacer login']);
+		}
+    }*/
+
+	const handleSubmit = async (e : any ) => {
 		e.preventDefault();
 
 		const data = {
-			username : usernameRef.current.value,
-			password : passwordRef.current.value
+			email : usernameRef.current?.value,
+			password : passwordRef.current?.value
 		}
 
-		login(data, setErrors)
+		await login(data, setErrors)
 
 	}
 
@@ -35,7 +49,7 @@ export default function Login(){
 
 				<div className="mx-auto grid w-[350px] gap-6">
 					<div className="grid gap-2 text-center">
-						<h1 className="text-3xl font-bold">Login</h1>
+						<h1 className="text-3xl font-bold">ForestMap</h1>
 						<p className="text-balance text-muted-foreground">
 						Enter your username below to login to your account
 						</p>

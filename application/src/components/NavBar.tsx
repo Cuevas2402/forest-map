@@ -71,7 +71,7 @@ export default function NavBar(){
 
 								<SquareTerminal className="h-4 w-4" />
 
-								Playground
+								Custom
 
 							</Link>
 

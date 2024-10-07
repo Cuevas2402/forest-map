@@ -5,6 +5,7 @@ import Main from './layouts/main/Main';
 import Dashboard from './views/dashboard/Dashboard';
 import Trees from './views/trees/Trees';
 import Users from './views/users/Users';
+import Protection from './views/protection/Protection';
 
 const router = createBrowserRouter([
 	{
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path:"/",
-		element:<Main/>,
+		element:<Protection><Main/></Protection>,
 		children:[
 			{
 				index:true,
