@@ -26,7 +26,7 @@ func ValidateToken(token string) (int64, error) {
 		if !ok {
 			return nil, errors.New("unexpected token")
 		}
-		return secretKey, nil
+		return []byte(secretKey), nil
 	})
 
 	if err != nil {
@@ -45,7 +45,7 @@ func ValidateToken(token string) (int64, error) {
 	}
 
 	//email := claims["email"].(string)
-	userId := int64(claims["userId"].(float64))
+	userId := int64(claims["userid"].(float64))
 
 	return userId, nil
 }

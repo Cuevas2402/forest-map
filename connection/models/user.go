@@ -20,6 +20,10 @@ type User struct {
 	Role      string
 }
 
+type Auth struct {
+	Token string
+}
+
 func (u *User) Save() error {
 
 	query := `INSERT INTO users (firstName, lastName, email, password, role) VALUES (?,?,?,?,?)`

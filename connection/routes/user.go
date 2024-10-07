@@ -90,3 +90,29 @@ func getUsers(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"users": users})
 
 }
+
+func getUser(context *gin.Context) {
+
+	token := context.GetHeader("Authorization")
+
+	if token == "" {
+		context.JSON(http.StatusBadRequest, gin.H{})
+		return
+	}
+
+	if len(token) < 7 || token[0:7] != "Bearer " {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Bad format"})
+	}
+
+	token = token[7:]
+
+	id, err := utils.ValidateToken(token)
+
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"user": id})
+
+}
