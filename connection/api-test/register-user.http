@@ -2,10 +2,10 @@ POST http://localhost:8080/user
 Content-Type: application/json
 
 {
-	"id": "1",
-	"firstName": "Juan2",
-	"lastName": "Cuevas2",
-	"email": "juan.cuevasg@udem.edu2",
-	"password": "abc",
-	"role": "admin"
+    "id": 1,
+    "firstName": "juan",
+    "lastName": "cuevas",
+    "email": "juan.cuevasg@udem.edu",
+    "password": "abc",
+    "role": "admin"
 }

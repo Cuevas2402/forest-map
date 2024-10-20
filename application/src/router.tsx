@@ -3,9 +3,10 @@ import Auth from "./layouts/Auth";
 import Login from './views/login/Login';
 import Main from './layouts/main/Main';
 import Dashboard from './views/dashboard/Dashboard';
-import Trees from './views/trees/Trees';
+import Trees from './views/zones/Zones';
 import Users from './views/users/Users';
 import Protection from './views/protection/Protection';
+import Upload from './views/upload/Upload';
 
 const router = createBrowserRouter([
 	{
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path:"/trees",
-				element:<Trees/>
+				element:<Trees/>,
+			},
+			{
+				path:"/trees/upload",
+				element:<Upload/>
 			},
 			{
 				path:"/users",

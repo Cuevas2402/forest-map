@@ -1,17 +1,32 @@
 package main
 
 import (
+	"os"
 	"time"
 
 	"example.com/connection/db"
 	"example.com/connection/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+
+	err := godotenv.Load()
+
+	if err != nil {
+		panic("Could not load env")
+	}
+
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/Users/juancuevas/Documents/forest-map/credentials.json") // Cambia esto por la ruta a tu archivo JSON
+
+}
 
 func main() {
 
 	db.InitDB()
+	db.InitMongo()
 
 	server := gin.Default()
 

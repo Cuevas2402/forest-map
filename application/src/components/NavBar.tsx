@@ -50,7 +50,7 @@ export default function NavBar(){
 
 
 								<TreeDeciduous className="h-4 w-4"/>
-								Trees
+								Zones	
 							
 							</Link>
 
