@@ -1,13 +1,20 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	middlewares "example.com/connection/middlawares"
+	"github.com/gin-gonic/gin"
+)
 
 func RegisterRoutes(server *gin.Engine) {
 	server.POST("/users", registerUsers)
 	server.POST("/user", registerUser)
 	server.POST("/auth", authenticate)
-	server.GET("/users", getUsers)
-	server.GET("/user", getUser)
-	server.POST("/upload/csv", uploadCsv)
-	server.POST("/upload/img", uploadImg)
+
+	authenticated := server.Group("/")
+	authenticated.Use(middlewares.Authenticate)
+
+	authenticated.GET("/users", getUsers)
+	authenticated.GET("/user", getUser)
+	authenticated.POST("/upload/csv", uploadCsv)
+	authenticated.POST("/upload/img", uploadImg)
 }

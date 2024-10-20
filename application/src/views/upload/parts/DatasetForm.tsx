@@ -35,7 +35,8 @@ export default function Dataset( { setProgress } : DatasetProps) {
         
         const response = await client.post(`/upload/${url}`, form, {
             headers : {
-                "Content-Type" : "multipart/form-data"
+                "Content-Type" : "multipart/form-data",
+                "Authorization" : `Bearer ${localStorage.getItem("token")}`
             },
             onUploadProgress : (progressEvent) => {
                 if (progressEvent.total != undefined) { 
