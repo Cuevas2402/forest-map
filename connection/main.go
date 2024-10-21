@@ -19,7 +19,7 @@ func init() {
 		panic("Could not load env")
 	}
 
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/Users/juancuevas/Documents/forest-map/credentials.json") // Cambia esto por la ruta a tu archivo JSON
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/Users/juancuevas/Documents/forest-map/credentials.json")
 
 }
 
