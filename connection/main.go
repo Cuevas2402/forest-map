@@ -27,6 +27,7 @@ func main() {
 
 	db.InitDB()
 	db.InitMongo()
+	db.InitPg()
 
 	server := gin.Default()
 
