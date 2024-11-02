@@ -2,9 +2,9 @@ POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
-    "id": 2,
-    "firstName": "juan2",
-    "lastName": "cuevas2",
-    "email": "juan.cuevasg@udem.edu2",
+    "id": 1,
+    "firstName": "juan",
+    "lastName": "cuevas",
+    "email": "juan.cuevasg@udem.edu",
     "password": "abc"
 }

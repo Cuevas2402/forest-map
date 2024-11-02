@@ -33,7 +33,7 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     const login = async (datos : LoginData, setErrores : React.Dispatch<React.SetStateAction<string[]>>) => {
 
 		try{
-			const {data} = await client.post('/auth', datos);
+			const {data} = await client.post('/auth/login', datos);
 			localStorage.setItem('token', data.token);
 			setErrores([]);
             mutate();

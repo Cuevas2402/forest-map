@@ -8,6 +8,7 @@ import (
 func RegisterRoutes(server *gin.Engine) {
 
 	server.POST("/api/auth/register/users", registerUsers)
+	server.GET("/api/user", getUser)
 	server.POST("/api/auth/register", registerUser)
 	server.POST("/api/auth/login", authenticate)
 
@@ -19,4 +20,6 @@ func RegisterRoutes(server *gin.Engine) {
 
 	authenticated.POST("/upload/csv", uploadCsv)
 	authenticated.POST("/upload/img", uploadImg)
+
+	authenticated.POST("/api/company", saveCompany)
 }

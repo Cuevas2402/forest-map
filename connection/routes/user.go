@@ -97,6 +97,7 @@ func getUsers(context *gin.Context) {
 func getUser(context *gin.Context) {
 
 	token := context.GetHeader("Authorization")
+	fmt.Print(token)
 
 	if token == "" {
 		context.JSON(http.StatusBadRequest, gin.H{})
@@ -105,6 +106,7 @@ func getUser(context *gin.Context) {
 
 	if len(token) < 7 || token[0:7] != "Bearer " {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Bad format"})
+		return
 	}
 
 	token = token[7:]
