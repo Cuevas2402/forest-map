@@ -6,15 +6,17 @@ import (
 )
 
 func RegisterRoutes(server *gin.Engine) {
-	server.POST("/users", registerUsers)
-	server.POST("/user", registerUser)
-	server.POST("/auth", authenticate)
+
+	server.POST("/api/auth/register/users", registerUsers)
+	server.POST("/api/auth/register", registerUser)
+	server.POST("/api/auth/login", authenticate)
 
 	authenticated := server.Group("/")
 	authenticated.Use(middlewares.Authenticate)
 
-	authenticated.GET("/users", getUsers)
-	authenticated.GET("/user", getUser)
+	authenticated.GET("/api/perfiles", getUsers)
+	authenticated.GET("/api/perfiles/:id", getUser)
+
 	authenticated.POST("/upload/csv", uploadCsv)
 	authenticated.POST("/upload/img", uploadImg)
 }

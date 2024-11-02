@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"example.com/connection/models"
@@ -36,14 +37,16 @@ func registerUser(context *gin.Context) {
 	err := context.ShouldBindJSON(&user)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not fetch data"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
+
+	fmt.Printf("Datos recibidos: %+v\n", user)
 
 	err = user.Save()
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not save user data"})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 

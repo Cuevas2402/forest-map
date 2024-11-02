@@ -12,12 +12,11 @@ type Users struct {
 }
 
 type User struct {
-	Id        int64
-	FirstName string
-	LastName  string
-	Email     string
-	Password  string
-	Role      string
+	Id        int64  `json:"id"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
 }
 
 type Auth struct {
@@ -25,25 +24,23 @@ type Auth struct {
 }
 
 func (u *User) Save() error {
+	query := `INSERT INTO users (firstName, lastName, email, password) VALUES ($1,$2,$3,$4)`
 
-	query := `INSERT INTO users (firstName, lastName, email, password, role) VALUES (?,?,?,?,?)`
-
-	stmt, err := db.DB.Prepare(query)
-
-	defer stmt.Close()
+	stmt, err := db.Postgre.Prepare(query)
 
 	if err != nil {
-		return nil
+		return err
 	}
+
+	defer stmt.Close()
 
 	hpassword, err := utils.HashPassword(u.Password)
 
 	if err != nil {
-		return nil
+		return err
 	}
 
-	_, err = stmt.Exec(u.FirstName, u.LastName, u.Email, hpassword, u.Role)
-
+	_, err = stmt.Exec(u.FirstName, u.LastName, u.Email, hpassword)
 	return err
 
 }
@@ -56,11 +53,11 @@ func (u *User) Validate() error {
 
 	stmt, err := db.DB.Prepare(query)
 
-	defer stmt.Close()
-
 	if err != nil {
 		return nil
 	}
+
+	defer stmt.Close()
 
 	row := stmt.QueryRow(u.Email)
 
@@ -90,18 +87,18 @@ func GetUsers() ([]User, error) {
 
 	var users []User
 
-	rows, err := db.DB.Query(query)
-
-	defer rows.Close()
+	rows, err := db.Postgre.Query(query)
 
 	if err != nil {
 		return users, nil
 	}
 
+	defer rows.Close()
+
 	for rows.Next() {
 
 		var user User
-		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.Password, &user.Role)
+		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.Password)
 		if err != nil {
 			return users, err
 		}
