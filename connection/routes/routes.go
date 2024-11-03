@@ -22,4 +22,5 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated.POST("/upload/img", uploadImg)
 
 	authenticated.POST("/api/company", saveCompany)
+	authenticated.POST("/api/usermapping", saveUserMapping)
 }
