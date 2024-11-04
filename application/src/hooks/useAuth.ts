@@ -1,7 +1,7 @@
-import client from "@/config/axios";
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from 'swr';
+import useClient from "./useClient";
 
 interface AuthProps {
 	middleware : string;
@@ -17,6 +17,8 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 	
 
 	const navigate = useNavigate();
+
+    const client = useClient();
 
     const {data : user, error, mutate} = useSWR('/user' ,() => 
         client('/user',{
@@ -77,4 +79,5 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
         user,
         error
     }
+
 }

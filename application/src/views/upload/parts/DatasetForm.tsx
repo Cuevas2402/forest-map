@@ -5,8 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { createRef, useState } from "react";
 import DangerAlert from "@/components/DangerAlert";
 import { Button } from "@/components/ui/button";
-import client from "@/config/axios";
 import Swal from 'sweetalert2'
+import useClient from "@/hooks/useClient";
 
 
 interface Errors {
@@ -32,18 +32,15 @@ export default function Dataset( { setProgress } : DatasetProps) {
 		form.append("file", file);
         form.append("name", name);
 
+        const client = useClient();
+
         
         const response = await client.post(`/upload/${url}`, form, {
-            headers : {
-                "Content-Type" : "multipart/form-data",
-                "Authorization" : `Bearer ${localStorage.getItem("token")}`
-            },
             onUploadProgress : (progressEvent) => {
                 if (progressEvent.total != undefined) { 
                     const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
                 }
-
             }
         })
 
@@ -56,13 +53,8 @@ export default function Dataset( { setProgress } : DatasetProps) {
             return false
 
         }
-        
-
-
 
 	}
-
-
 
     const handleSubmit = async (e: any) => {
         setProgress(0);
