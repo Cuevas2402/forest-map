@@ -25,7 +25,6 @@ func init() {
 
 func main() {
 
-	db.InitDB()
 	db.InitMongo()
 	db.InitPg()
 

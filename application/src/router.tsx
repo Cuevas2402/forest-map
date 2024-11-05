@@ -1,17 +1,18 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter} from 'react-router-dom';
 import Auth from "./layouts/Auth";
 import Login from './views/login/Login';
 import Main from './layouts/main/Main';
 import Dashboard from './views/dashboard/Dashboard';
 import Trees from './views/zones/Zones';
 import Users from './views/users/Users';
-import Protection from './views/protection/Protection';
 import Upload from './views/upload/Upload';
+import UserProtection from './views/protection/UserProtection';
+import AuthProtection from './views/protection/AuthProtection';
 
 const router = createBrowserRouter([
 	{
-		path:"/auth",
-		element:<Auth/>,
+		path:"/login",
+		element:<AuthProtection> <Auth/> </AuthProtection>,
 		children: [
 			{
 				index:true,
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path:"/",
-		element:<Protection><Main/></Protection>,
+		element:<UserProtection><Main/></UserProtection>,
 		children:[
 			{
 				index:true,

@@ -1,11 +1,15 @@
 package models
 
-import "example.com/connection/db"
+import (
+	"errors"
+
+	"example.com/connection/db"
+)
 
 type UserMapping struct {
 	Uimid  int64
 	Uid    int64
-	Cid    int64
+	Cid    *int64
 	Rid    int64
 	Date   string
 	Status string
@@ -32,4 +36,30 @@ func (um *UserMapping) Save() error {
 	}
 
 	return nil
+}
+
+func (um *UserMapping) Find() error {
+
+	query := `
+		SELECT uimid, cid, rid FROM usermapping WHERE status = 'active' AND uid = $1;
+	`
+
+	stmt, err := db.Postgre.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	row := stmt.QueryRow(um.Uid)
+
+	if row == nil {
+		return errors.New("no matching data")
+	}
+
+	err = row.Scan(&um.Uimid, &um.Cid, &um.Rid)
+
+	return err
+
 }

@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"log"
 
 	"example.com/connection/db"
 	"example.com/connection/utils"
@@ -12,7 +13,7 @@ type Users struct {
 }
 
 type User struct {
-	Id        int64  `json:"id"`
+	Uid       int64  `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
@@ -48,22 +49,22 @@ func (u *User) Save() error {
 func (u *User) Validate() error {
 
 	query := `
-		SELECT password FROM users WHERE email = ?;
+		SELECT * FROM users WHERE email = $1;
 	`
 
-	stmt, err := db.DB.Prepare(query)
+	stmt, err := db.Postgre.Prepare(query)
 
 	if err != nil {
 		return nil
 	}
 
-	defer stmt.Close()
-
 	row := stmt.QueryRow(u.Email)
 
 	var password string
 
-	err = row.Scan(&password)
+	err = row.Scan(&u.Uid, &u.FirstName, &u.LastName, &u.Email, &password)
+
+	log.Print(u)
 
 	if err != nil {
 		return err
@@ -98,7 +99,7 @@ func GetUsers() ([]User, error) {
 	for rows.Next() {
 
 		var user User
-		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.Password)
+		err = rows.Scan(&user.Uid, &user.FirstName, &user.LastName, &user.Email, &user.Password)
 		if err != nil {
 			return users, err
 		}

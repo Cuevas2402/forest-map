@@ -41,8 +41,6 @@ func registerUser(context *gin.Context) {
 		return
 	}
 
-	fmt.Printf("Datos recibidos: %+v\n", user)
-
 	err = user.Save()
 
 	if err != nil {
@@ -66,18 +64,37 @@ func authenticate(context *gin.Context) {
 	err = user.Validate()
 
 	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not authorized"})
+		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
 	}
 
-	token, err := utils.GenerateToken(user.Email, user.Id)
+	token, err := utils.GenerateToken(user.Email, user.Uid)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not generate token"})
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "Authorized", "token": token})
+	var um models.UserMapping
+
+	um.Uid = user.Uid
+
+	err = um.Find()
+
+	fmt.Println(um.Rid, um.Uid, um.Cid)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Authorized",
+		"token":   token,
+		"uid":     um.Uid,
+		"rid":     um.Rid,
+		"cid":     um.Cid,
+	})
 
 }
 
@@ -114,7 +131,7 @@ func getUser(context *gin.Context) {
 	id, err := utils.ValidateToken(token)
 
 	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{})
+		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
 	}
 

@@ -1,10 +1,10 @@
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDU5MTgzOSwidXNlcmlkIjowfQ.dVQh4qvd2Mx6waIAvMweZcoWDJefVYBjJRtaUJTJ8-Q
 
 {
-    "id": 1,
-    "firstName": "juan",
-    "lastName": "cuevas",
-    "email": "juan.cuevasg@udem.edu",
+    "firstName": "juan3",
+    "lastName": "cuevas3",
+    "email": "juan@udem.edu",
     "password": "abc"
 }

@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label"
 import { createRef, useState } from "react"
 import LoginAlert from "./parts/LoginAlert";
 import { useAuth } from "@/hooks/useAuth";
+import { redirect } from "react-router-dom";
 
 
 export default function Login(){
@@ -39,7 +40,11 @@ export default function Login(){
 			password : passwordRef.current?.value
 		}
 
-		await login(data, setErrors)
+		const logged : boolean = await login(data, setErrors);
+
+		if (logged){
+			redirect("/");
+		}
 
 	}
 

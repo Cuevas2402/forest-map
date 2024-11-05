@@ -1,3 +1,6 @@
-GET http://localhost:8080/g/users
+GET http://localhost:8080/api/perfiles
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDc3NzA2MCwidXNlcmlkIjo2Mn0.CvnWg6mFWt-MaYCbdmReWuMiv_lyQ6iOl3uHFvwPH5M
+
+
 

@@ -19,7 +19,7 @@ func Authenticate(context *gin.Context) {
 	userId, err := utils.ValidateToken(token)
 
 	if err != nil {
-		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized"})
+		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
 	}
 

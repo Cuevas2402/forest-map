@@ -3,10 +3,12 @@ import React, { createContext , ReactNode, useState} from "react";
 type AppContextProps = {
 	uid : number | undefined;
 	setUid : (uid : number ) => void;
-	companies : number[] | undefined;
-	setCompanies : (companies : number[]) => void;
+	companies : number | undefined;
+	setCompanies : (companies : number) => void;
 	token : string | undefined;
 	setToken : (token : string) => void;
+	role : number | undefined;
+	setRole : (role : number ) => void;
 
 };
 
@@ -14,10 +16,12 @@ const AppContext = createContext<AppContextProps>(
 	{
 		uid : -1,
 		setUid : () => {},
-		companies : [],
+		companies : -1,
 		setCompanies : () => {},
 		token : "",
-		setToken : () => {}
+		setToken : () => {},
+		role : -1,
+		setRole: () => {}
 	}
 );
 
@@ -27,9 +31,10 @@ type AppProviderProps = {
 
 const AppProvider : React.FC<AppProviderProps> = ({children}) => {
 
-	const [uid, setUid] = useState<number>();
-	const [companies, setCompanies] = useState<number[]>();
-	const [token, setToken] = useState<string>();
+	const [uid, setUid] = useState<number>(-1);
+	const [companies, setCompanies] = useState<number>(-1);
+	const [token, setToken] = useState<string>("");
+	const [role, setRole] = useState<number>(-1);
 
 
 	return (
@@ -40,7 +45,9 @@ const AppProvider : React.FC<AppProviderProps> = ({children}) => {
 				companies,
 				setCompanies,
 				token,
-				setToken
+				setToken,
+				role,
+				setRole
 			}
 		} >
 			{children}

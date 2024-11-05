@@ -2,6 +2,7 @@ import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from 'swr';
 import useClient from "./useClient";
+import useApp from "./useApp";
 
 interface AuthProps {
 	middleware : string;
@@ -20,12 +21,10 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 
     const client = useClient();
 
+    const {setUid, setCompanies, setRole, setToken} = useApp();
+
     const {data : user, error, mutate} = useSWR('/user' ,() => 
-        client('/user',{
-            headers : {
-                Authorization : `Bearer ${localStorage.getItem('token')}`,
-            }
-        })
+        client('/user')
         .then(res => res.data)
         .catch(error => {
             throw Error(error?.response?.data?.errors) 
@@ -35,12 +34,23 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     const login = async (datos : LoginData, setErrores : React.Dispatch<React.SetStateAction<string[]>>) => {
 
 		try{
+
 			const {data} = await client.post('/auth/login', datos);
-			localStorage.setItem('token', data.token);
+
+            console.log(data.token);
+            setToken(data.token);
+            setUid(data.uid);
+            setCompanies(data.cid);
+            setRole(data.rid);
+
 			setErrores([]);
             mutate();
+
+            return true;
+
 		}catch (error){
 			setErrores(['Error al hacer login']);
+            return false;
 		}
     }
 
@@ -48,11 +58,7 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
     const logout = async () => {
 
         try{
-            await client.post('/auth', null, {
-                headers : {
-                    Authorization : `Bearer ${localStorage.getItem('AUTH_TOKEN')}`,
-                }
-            })
+            await client.post('/auth', null);
             localStorage.removeItem('token');
             mutate(undefined);
         } catch (error) {
@@ -63,7 +69,6 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 
     useEffect(()=>{
 
-        console.log(user)
         if(middleware === 'guest' && url && user){
             navigate(url);
         }
@@ -71,6 +76,7 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
         if(middleware === 'auth' && error) {
             navigate('/auth');
         }
+
     }, [user, error, middleware, url, navigate]);
 
     return {
