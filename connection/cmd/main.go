@@ -4,8 +4,8 @@ import (
 	"os"
 	"time"
 
-	"example.com/connection/db"
-	"example.com/connection/routes"
+	"example.com/connection/app/api"
+	"example.com/connection/app/pkg/db"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -39,7 +39,7 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	routes.RegisterRoutes(server)
+	api.RegisterRoutes(server)
 
 	server.Run(":8080")
 

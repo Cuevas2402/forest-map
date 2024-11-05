@@ -1,20 +1,11 @@
-package models
+package upload
 
 import (
 	"context"
 	"fmt"
 	"io"
 	"time"
-
-	"cloud.google.com/go/storage"
 )
-
-type ClientUploader struct {
-	Cl         *storage.Client
-	ProjectID  string
-	BucketName string
-	UploadPath string
-}
 
 func (c *ClientUploader) UploadFile(file io.Reader, object string) error {
 	ctx := context.Background()

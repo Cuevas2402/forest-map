@@ -1,39 +1,16 @@
-package routes
+package user
 
 import (
 	"fmt"
 	"net/http"
 
-	"example.com/connection/models"
-	"example.com/connection/utils"
+	"example.com/connection/app/internal/usermapping"
+	"example.com/connection/app/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
-func registerUsers(context *gin.Context) {
-	var users models.Users
-	err := context.ShouldBindJSON(&users)
-
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not fetch data"})
-		return
-	}
-
-	for _, user := range users.Users {
-
-		err = user.Save()
-
-		if err != nil {
-			context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not register user"})
-			return
-		}
-
-	}
-
-	context.JSON(http.StatusOK, gin.H{"message": "Users saved"})
-}
-
-func registerUser(context *gin.Context) {
-	var user models.User
+func register(context *gin.Context) {
+	var user User
 	err := context.ShouldBindJSON(&user)
 
 	if err != nil {
@@ -52,7 +29,7 @@ func registerUser(context *gin.Context) {
 }
 
 func authenticate(context *gin.Context) {
-	var user models.User
+	var user User
 
 	err := context.ShouldBindJSON(&user)
 
@@ -75,7 +52,7 @@ func authenticate(context *gin.Context) {
 		return
 	}
 
-	var um models.UserMapping
+	var um usermapping.UserMapping
 
 	um.Uid = user.Uid
 
@@ -98,9 +75,9 @@ func authenticate(context *gin.Context) {
 
 }
 
-func getUsers(context *gin.Context) {
+func users(context *gin.Context) {
 
-	users, err := models.GetUsers()
+	users, err := getUsers()
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Server error"})
@@ -111,10 +88,9 @@ func getUsers(context *gin.Context) {
 
 }
 
-func getUser(context *gin.Context) {
+func user(context *gin.Context) {
 
 	token := context.GetHeader("Authorization")
-	fmt.Print(token)
 
 	if token == "" {
 		context.JSON(http.StatusBadRequest, gin.H{})
@@ -136,5 +112,13 @@ func getUser(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"user": id})
+
+}
+
+func profile(c *gin.Context) {
+
+}
+
+func profiles(c *gin.Context) {
 
 }

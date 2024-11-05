@@ -1,5 +1,2 @@
-db/api.db
-./auth
-connection
-config
 .env
+cmd/.env

@@ -1,16 +1,10 @@
-package models
+package company
 
 import (
 	"time"
 
-	"example.com/connection/db"
+	"example.com/connection/app/pkg/db"
 )
-
-type Company struct {
-	Cid  int64
-	Name string
-	Date string
-}
 
 func (c *Company) Save() error {
 

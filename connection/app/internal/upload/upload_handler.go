@@ -1,4 +1,4 @@
-package routes
+package upload
 
 import (
 	"archive/zip"
@@ -10,8 +10,7 @@ import (
 	"net/http"
 
 	"cloud.google.com/go/storage"
-	"example.com/connection/db"
-	"example.com/connection/models"
+	"example.com/connection/app/pkg/db"
 	"github.com/gin-gonic/gin"
 )
 
@@ -62,8 +61,8 @@ func uploadCsv(c *gin.Context) {
 	coll := db.Mongo.Database("forest-data").Collection("companies")
 
 	trees := []interface{}{
-		models.Tree{Name: "tree1"},
-		models.Tree{Name: "tree2"},
+		Tree{Name: "tree1"},
+		Tree{Name: "tree2"},
 	}
 
 	_, err = coll.InsertMany(context.TODO(), trees)
@@ -79,7 +78,7 @@ func uploadCsv(c *gin.Context) {
 
 func uploadImg(c *gin.Context) {
 
-	var uploader *models.ClientUploader
+	var uploader *ClientUploader
 
 	client, err := storage.NewClient(context.Background())
 
@@ -87,7 +86,7 @@ func uploadImg(c *gin.Context) {
 		log.Fatalf("Failed to create client: %v", err)
 	}
 
-	uploader = &models.ClientUploader{
+	uploader = &ClientUploader{
 		Cl:         client,
 		BucketName: "forestdata_bucket",
 		ProjectID:  "forestmap-438420",

@@ -1,14 +1,13 @@
-package routes
+package company
 
 import (
 	"net/http"
 
-	"example.com/connection/models"
 	"github.com/gin-gonic/gin"
 )
 
 func saveCompany(c *gin.Context) {
-	var company models.Company
+	var company Company
 
 	err := c.ShouldBindJSON(&company)
 

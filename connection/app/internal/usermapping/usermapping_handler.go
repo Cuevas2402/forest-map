@@ -1,14 +1,13 @@
-package routes
+package usermapping
 
 import (
 	"net/http"
 
-	"example.com/connection/models"
 	"github.com/gin-gonic/gin"
 )
 
 func saveUserMapping(c *gin.Context) {
-	var usermapping models.UserMapping
+	var usermapping UserMapping
 
 	err := c.ShouldBindJSON(&usermapping)
 

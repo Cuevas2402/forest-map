@@ -1,28 +1,11 @@
-package models
+package user
 
 import (
 	"errors"
-	"log"
 
-	"example.com/connection/db"
-	"example.com/connection/utils"
+	"example.com/connection/app/pkg/db"
+	"example.com/connection/app/pkg/utils"
 )
-
-type Users struct {
-	Users []User
-}
-
-type User struct {
-	Uid       int64  `json:"id"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-}
-
-type Auth struct {
-	Token string
-}
 
 func (u *User) Save() error {
 	query := `INSERT INTO users (firstName, lastName, email, password) VALUES ($1,$2,$3,$4)`
@@ -64,8 +47,6 @@ func (u *User) Validate() error {
 
 	err = row.Scan(&u.Uid, &u.FirstName, &u.LastName, &u.Email, &password)
 
-	log.Print(u)
-
 	if err != nil {
 		return err
 	}
@@ -80,7 +61,7 @@ func (u *User) Validate() error {
 
 }
 
-func GetUsers() ([]User, error) {
+func getUsers() ([]User, error) {
 
 	query := `
 		SELECT * FROM users;
