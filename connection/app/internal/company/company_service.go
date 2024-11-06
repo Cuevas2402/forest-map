@@ -31,3 +31,39 @@ func (c *Company) Save() error {
 	return nil
 
 }
+
+func (c *Company) Delete() error {
+	query := `
+		DELETE FROM companies WHERE cid = $1
+	`
+	stmt, err := db.Postgre.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(&c.Cid)
+
+	return err
+}
+
+func (c *Company) Update() error {
+	query := `
+		UPDATE companies SET name = $1;
+	`
+
+	stmt, err := db.Postgre.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(&c.Name)
+
+	return err
+
+}

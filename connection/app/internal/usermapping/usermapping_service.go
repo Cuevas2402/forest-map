@@ -54,3 +54,41 @@ func (um *UserMapping) Find() error {
 	return err
 
 }
+
+func (um *UserMapping) Update() error {
+
+	query := `
+		UPDATE usermapping SET status = $1
+	`
+
+	stmt, err := db.Postgre.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(um.Status)
+
+	return err
+
+}
+
+func (um *UserMapping) Delete() error {
+	query := `
+		DELETE FROM usermapping WHERE uimid = $1
+	`
+
+	stmt, err := db.Postgre.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(um.Uimid)
+
+	return err
+}

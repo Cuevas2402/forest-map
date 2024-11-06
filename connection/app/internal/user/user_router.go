@@ -11,8 +11,11 @@ func LoginRoute(server *gin.Engine) {
 func UserRoutes(authenticated *gin.RouterGroup) {
 
 	authenticated.GET("/api/user", user)
+	authenticated.DELETE("/api/user", deleteUser)
+	authenticated.PUT("/api/user", updateUser)
 	authenticated.GET("/api/users", users)
 	authenticated.POST("/api/auth/register", register)
+	authenticated.GET("/api/user/:uid", getUser)
 
 	authenticated.GET("/api/perfiles", profiles)
 	authenticated.GET("/api/perfiles/:id", profile)

@@ -3,6 +3,7 @@ package user
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"example.com/connection/app/internal/usermapping"
 	"example.com/connection/app/pkg/utils"
@@ -77,7 +78,7 @@ func authenticate(context *gin.Context) {
 
 func users(context *gin.Context) {
 
-	users, err := getUsers()
+	users, err := GetAllUsers()
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Server error"})
@@ -120,5 +121,72 @@ func profile(c *gin.Context) {
 }
 
 func profiles(c *gin.Context) {
+
+}
+
+func deleteUser(c *gin.Context) {
+
+	var user User
+
+	err := c.ShouldBindJSON(&user)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	err = user.Delete()
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"messag": "success", "user": user})
+
+}
+
+func updateUser(c *gin.Context) {
+	var user User
+
+	err := c.ShouldBindJSON(&user)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	err = user.Update()
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "user": user})
+
+}
+
+func getUser(c *gin.Context) {
+
+	uid, err := strconv.ParseInt(c.Param("uid"), 10, 64)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	var user User
+
+	user.Uid = uid
+
+	err = user.Get()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "user": user})
 
 }
