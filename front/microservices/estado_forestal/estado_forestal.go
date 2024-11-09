@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"forest-map/microservices/db_config"
+	"forest-map/microservices/interfaces"
 	"forest-map/microservices/utils"
 	"net/http"
 
@@ -32,7 +33,7 @@ func GetForestStatus(w http.ResponseWriter, r *http.Request) {
 
 	for _, collectionName := range collections {
 		collection := db.Collection(collectionName)
-		var forests []utils.Forest
+		var forests []interfaces.Forest
 
 		cursor, err := collection.Find(ctx, bson.M{})
 		if err != nil {
@@ -86,7 +87,7 @@ func GetForestZoneStatus(w http.ResponseWriter, r *http.Request) {
 	collection := db_config.GetCollection(forestName)
 	ctx := context.TODO()
 
-	var forests []utils.Forest
+	var forests []interfaces.Forest
 	filter := bson.M{}
 
 	cursor, err := collection.Find(ctx, filter)
@@ -148,7 +149,7 @@ func GetZoneStatus(w http.ResponseWriter, r *http.Request) {
 	collection := db_config.GetCollection(forestName)
 	ctx := context.TODO()
 
-	var forests []utils.Forest
+	var forests []interfaces.Forest
 	filter := bson.M{}
 
 	cursor, err := collection.Find(ctx, filter)
@@ -164,7 +165,7 @@ func GetZoneStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	type Promedio struct {
-		TreeID        string  `json:"tree_id"`
+		ZoneID        string  `json:"zone_id"`
 		MostFreqClass int     `json:"most_freq_class"`
 		AvgNDVI       float64 `json:"avg_ndvi"`
 	}
@@ -190,7 +191,7 @@ func GetZoneStatus(w http.ResponseWriter, r *http.Request) {
 				mostFreqClass := getMostFrequentClass(classFrequency)
 				if count > 0 {
 					promedios = append(promedios, Promedio{
-						TreeID:        zoneID,
+						ZoneID:        zoneID,
 						MostFreqClass: mostFreqClass,
 						AvgNDVI:       totalNDVI / float64(count),
 					})

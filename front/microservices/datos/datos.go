@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"forest-map/microservices/db_config"
+	"forest-map/microservices/interfaces"
 	"forest-map/microservices/utils"
 	"net/http"
 
@@ -24,11 +25,11 @@ func GetAllForests(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var allForests []utils.Forest
+	var allForests []interfaces.Forest
 
 	for _, collectionName := range collections {
 		collection := db.Collection(collectionName)
-		var forests []utils.Forest
+		var forests []interfaces.Forest
 
 		cursor, err := collection.Find(ctx, bson.M{})
 		if err != nil {
@@ -78,7 +79,7 @@ func GetZonesByForest(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Consultando la colección: %s\n", forestName)
 
-	var forest []utils.Forest
+	var forest []interfaces.Forest
 	filter := bson.M{}
 	fmt.Printf("Usando filtro: %v\n", filter)
 
@@ -105,7 +106,7 @@ func GetZonesByForest(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Documentos encontrados en la colección %s: %d\n", forestName, len(forest))
 
-	var zones []utils.Zone
+	var zones []interfaces.Zone
 	for _, f := range forest {
 		for _, zone := range f.Zones {
 			for _, tree := range zone.Trees {
@@ -140,7 +141,7 @@ func GetTreesByZone(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Consultando la colección: %s\n", forestName)
 
-	var forests []utils.Forest
+	var forests []interfaces.Forest
 	filter := bson.M{}
 	fmt.Printf("Usando filtro: %v\n", filter)
 
@@ -167,7 +168,7 @@ func GetTreesByZone(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Documentos encontrados en la colección %s: %d\n", forestName, len(forests))
 
-	var trees []utils.Tree
+	var trees []interfaces.Tree
 	for _, forest := range forests {
 		for _, zone := range forest.Zones {
 			if zone.ID == zoneID {
