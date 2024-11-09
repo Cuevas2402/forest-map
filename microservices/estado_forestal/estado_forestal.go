@@ -3,8 +3,8 @@ package estado_forestal
 import (
 	"context"
 	"encoding/json"
-	"forest-map/Microservices/db_config"
-	"forest-map/Microservices/utils"
+	"forest-map/microservices/db_config"
+	"forest-map/microservices/utils"
 	"net/http"
 
 	"github.com/gorilla/mux"
