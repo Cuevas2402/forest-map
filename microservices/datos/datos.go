@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"forest-map/Microservices/db_config"
-	"forest-map/Microservices/utils"
+	"forest-map/microservices/db_config"
+	"forest-map/microservices/utils"
 	"net/http"
 
 	"github.com/gorilla/mux"
