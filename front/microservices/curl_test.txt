@@ -1,0 +1,20 @@
+Recuperar todos los datos de la bd
+curl -X GET http://localhost:5000/api/bosques
+curl -X GET http://localhost:5000/api/Viken/zonas
+curl -X GET http://localhost:5000/api/Viken/zonas/173/trees
+
+
+Generar un reporte del estado actual de las áreas forestales monitoreadas
+curl -X GET http://localhost:5001/api/reportes/estado-forestal
+curl -X GET http://localhost:5001/api/reportes/estado-forestal/Viken/zonas
+curl -X GET http://localhost:5001/api/reportes/estado-forestal/Viken/zonas/173/status
+
+
+Obtener un análisis del impacto del cambio climático en las áreas forestales usando modelos predictivos.
+curl -X GET http://localhost:5004/api/reportes/impacto-cambio-climatico
+
+
+Resumen estadístico de los datos recopilados para análisis de decisiones.
+curl -X GET http://localhost:5005/api/reportes/resumen-datos
+curl -X GET http://localhost:5005/api/reportes/resumen-datos/Viken/zonas
+curl -X GET http://localhost:5005/api/reportes/resumen-datos/Viken/zonas/173/resumen
