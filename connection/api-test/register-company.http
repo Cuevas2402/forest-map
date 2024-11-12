@@ -1,7 +1,7 @@
 POST http://localhost:8080/api/company
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDU5MTgzOSwidXNlcmlkIjowfQ.dVQh4qvd2Mx6waIAvMweZcoWDJefVYBjJRtaUJTJ8-Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDkyMTc2NywidXNlcmlkIjoxfQ.v1j_XfQZeMNoNyStO4bcKMQSCdZ7gvr0KgHALDcmSdw
 
 {
-	"name" : "UDEM"
+	"name" : "Company 2"
 }

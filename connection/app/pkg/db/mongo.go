@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"os"
+	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -22,9 +23,13 @@ func InitMongo() {
 
 	}
 
-	clientOptions := options.Client().ApplyURI(uri)
+	clientOptions := options.Client().ApplyURI(uri).SetServerSelectionTimeout(30 * time.Second)
 
-	Mongo, err = mongo.Connect(context.TODO(), clientOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	defer cancel()
+
+	Mongo, err = mongo.Connect(ctx, clientOptions)
 
 	if err != nil {
 

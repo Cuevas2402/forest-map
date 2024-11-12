@@ -1,6 +1,6 @@
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDU5MTgzOSwidXNlcmlkIjowfQ.dVQh4qvd2Mx6waIAvMweZcoWDJefVYBjJRtaUJTJ8-Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDkxNTAzNCwidXNlcmlkIjoxfQ.sDtsbjAb2rHK82-l8K4QYQQg4h4CjVLndEpiUcKT438
 
 {
     "firstName": "juan3",

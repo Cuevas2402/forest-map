@@ -3,6 +3,7 @@ package api
 import (
 	middlewares "example.com/connection/app/api/middlawares"
 	"example.com/connection/app/internal/company"
+	"example.com/connection/app/internal/forest"
 	"example.com/connection/app/internal/upload"
 	"example.com/connection/app/internal/user"
 	"example.com/connection/app/internal/usermapping"
@@ -20,5 +21,6 @@ func RegisterRoutes(server *gin.Engine) {
 	company.CompanyRoutes(authenticated)
 	upload.UploadRoutes(authenticated)
 	usermapping.UserMappingRouter(authenticated)
+	forest.ForestRouter(authenticated)
 
 }

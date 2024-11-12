@@ -1,6 +1,3 @@
-GET http://localhost:8080/api/user
+GET http://localhost:8080/api/users
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDkyMTc2NywidXNlcmlkIjoxfQ.v1j_XfQZeMNoNyStO4bcKMQSCdZ7gvr0KgHALDcmSdw
-
-
-
