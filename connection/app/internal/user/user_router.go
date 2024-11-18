@@ -5,6 +5,7 @@ import "github.com/gin-gonic/gin"
 func LoginRoute(server *gin.Engine) {
 
 	server.POST("/api/auth/login", authenticate)
+	server.GET("/api/test/users", users)
 
 }
 
