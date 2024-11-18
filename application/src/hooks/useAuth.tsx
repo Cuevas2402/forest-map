@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useSWR from 'swr';
 import useClient from "./useClient";
 import { useDispatch } from "react-redux";
-import { setCid, setRid, setToken, setUid } from "redux/slices/userSlice";
+import { setCid, setRid, setToken, setUid } from "@/redux/slices/userSlice";
 
 interface AuthProps {
 	middleware : string;
@@ -48,6 +48,7 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
             return true;
 
 		}catch (error){
+            console.log(error);
 			setErrores(['Error al hacer login']);
             return false;
 		}

@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
-import store from '../redux/index';
+import store from './redux/index';
 import router from "./router";
 import './index.css'
 

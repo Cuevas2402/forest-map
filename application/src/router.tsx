@@ -8,6 +8,7 @@ import Upload from './views/upload/Upload';
 //import UserProtection from './views/protection/UserProtection';
 import AuthProtection from './views/protection/AuthProtection';
 import Main from './layouts/main/Main';
+import UserProtection from './views/protection/UserProtection';
 
 const router = createBrowserRouter([
 	{
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path:"/",
-		element:<Main/>,
+		element:<UserProtection><Main/></UserProtection>,
 		children:[
 			{
 				index:true,
