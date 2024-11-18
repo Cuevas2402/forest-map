@@ -2,7 +2,8 @@ import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from 'swr';
 import useClient from "./useClient";
-import useApp from "./useApp";
+import { useDispatch } from "react-redux";
+import { setCid, setRid, setToken, setUid } from "redux/slices/userSlice";
 
 interface AuthProps {
 	middleware : string;
@@ -15,13 +16,12 @@ interface LoginData{
 }
 
 export const useAuth  = ({middleware, url} : AuthProps) => {
-	
+    
+    const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
     const client = useClient();
-
-    const {setUid, setCompanies, setRole, setToken} = useApp();
 
     const {data : user, error, mutate} = useSWR('/user' ,() => 
         client('/user')
@@ -37,11 +37,10 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 
 			const {data} = await client.post('/auth/login', datos);
 
-            console.log(data.token);
-            setToken(data.token);
-            setUid(data.uid);
-            setCompanies(data.cid);
-            setRole(data.rid);
+            dispatch(setToken({token : data.token}));
+            dispatch(setUid({ uid : data.uid} ));
+            dispatch(setCid({ cid : data.cid}));
+            dispatch(setRid({ rid : data.rid}));
 
 			setErrores([]);
             mutate();
@@ -54,12 +53,14 @@ export const useAuth  = ({middleware, url} : AuthProps) => {
 		}
     }
 
-
     const logout = async () => {
 
         try{
             await client.post('/auth', null);
-            localStorage.removeItem('token');
+            dispatch(setToken({token : ""}));
+            dispatch(setUid({ uid : -1} ));
+            dispatch(setCid({ cid : -1}));
+            dispatch(setRid({ rid : -1}));
             mutate(undefined);
         } catch (error) {
             throw Error();

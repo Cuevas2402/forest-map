@@ -19,19 +19,6 @@ export default function Login(){
 	
 	const [errors, setErrors]: [string[], React.Dispatch<React.SetStateAction<string[]>>] = useState<string[]>([]);
 
-
-    /*const login = async (datos : LoginData, setErrores : React.Dispatch<React.SetStateAction<string[]>>) => {
-
-		try{
-			console.log(datos)
-			const {data} = await client.post('/auth', datos);
-			localStorage.setItem('token', data.token);
-			setErrores([]);
-		}catch (error){
-			setErrores(['Error al hacer login']);
-		}
-    }*/
-
 	const handleSubmit = async (e : any ) => {
 		e.preventDefault();
 
