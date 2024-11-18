@@ -1,24 +1,37 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
-	user : {
-		uid : -1,
-		cid : -1,
-		token : "",
-		rid : -1
-	}
+	uid : -1,
+	cid : -1,
+	token : "",
+	rid : -1
 }
 
 export const userSlice = createSlice({
 	name : "userSlice",
 	initialState,
 	reducers : {
-		setUser : (state, action) => {
-			state.user = action.payload.user;
+		setUid : (state, action) => {
+			state.uid = action.payload.uid;
+		},
+		setCid : (state, action) => {
+			state.cid = action.payload.cid;
+		},
+		setToken : (state, action) => {
+			state.token = action.payload.token;
+		},
+		setRid : (state, action) => {
+			state.rid = action.payload.rid;
 		}
 	}
 }) 
 
-export const {setUser} = userSlice.actions;
-export const selectUser = (state) => state.user;
-export default userSlice.reducer;
+export const {setUid, setCid, setToken, setRid} = userSlice.actions;
+export const selectUid = (state) => state.userState.uid;
+export const selectCid = (state) => state.userState.cid;
+export const selectRid = (state) => state.userState.rid;
+export const selectToken = (state) => state.userState.token;
+const userReducer = userSlice.reducer;
+export default userReducer;
+
+
