@@ -1,0 +1,3 @@
+GET http://localhost:8080/api/companies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMTk4ODg1NywidXNlcmlkIjoxfQ.VqxEVs_7Byfb3QH0X0Td8COu36Yc3dJZBA2Ie1GPwlY

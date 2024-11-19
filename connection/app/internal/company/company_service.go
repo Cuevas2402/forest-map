@@ -67,3 +67,36 @@ func (c *Company) Update() error {
 	return err
 
 }
+
+func getCompanies() ([]Company, error) {
+	query := `
+		SELECT * FROM companies;
+	`
+
+	var companies []Company
+
+	rows, err := db.Postgre.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		var company Company
+
+		err = rows.Scan(&company.Cid, &company.Name, &company.Date)
+
+		if err != nil {
+			return nil, err
+		}
+
+		companies = append(companies, company)
+
+	}
+
+	return companies, nil
+
+}

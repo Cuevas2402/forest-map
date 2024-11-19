@@ -9,6 +9,7 @@ import Upload from './views/upload/Upload';
 import AuthProtection from './views/protection/AuthProtection';
 import Main from './layouts/main/Main';
 import UserProtection from './views/protection/UserProtection';
+import Companies from './views/companies/Companies';
 
 const router = createBrowserRouter([
 	{
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
 			{
 				path:"/users",
 				element:<Users/>
+			},
+			{
+				path:"/companies",
+				element:<Companies/>
 			}
 
 		]
