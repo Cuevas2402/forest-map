@@ -1,29 +1,18 @@
-import { useEffect, useState } from "react";
-import useClient from "@/hooks/useClient";
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
 } from "@/components/ui/table";
 import {
   Tabs,
   TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -32,41 +21,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { File, ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
+import { File, ListFilter, PlusCircle } from "lucide-react";
+import TableHeaderUser from "./TableHeaderUser";
+import TableBodyUser from "./TableBodyUser";
+import User from "@/interfaces/user";
 
-type User = {
-  uid: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-};
+interface TableUsersProps {
+  data : User[],
+}
 
-export default function TableUsers() {
-  const client = useClient();
-  const [data, setData] = useState<User[]>([]);
-
-  const handleGetData = async () => {
-    const response = await client.get("/test/users");
-    setData(response.data.users);
-  };
-
-  useEffect(() => {
-    handleGetData();
-  }, []);
-
+const TableUsers : React.FC<TableUsersProps> = ({data}) => {
   return (
     <>
       <Tabs defaultValue="all">
         <div className="flex items-center">
-          <TabsList>
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="active">Active</TabsTrigger>
-            <TabsTrigger value="draft">Draft</TabsTrigger>
-            <TabsTrigger value="archived" className="hidden sm:flex">
-              Archived
-            </TabsTrigger>
-          </TabsList>
           <div className="ml-auto flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -105,62 +73,14 @@ export default function TableUsers() {
               <CardTitle>Users</CardTitle>
             </CardHeader>
             <CardContent>
+
               <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="hidden w-[100px] sm:table-cell">
-                      <span className="sr-only">img</span>
-                    </TableHead>
-                    <TableHead>Mail</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Company</TableHead>
-                    <TableHead className="hidden md:table-cell">
-                      Created at
-                    </TableHead>
-                    <TableHead>
-                      <span className="sr-only">Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((user) => (
-                    <TableRow key={user.uid}>
-                      <TableCell className="hidden sm:table-cell">
-                        <img
-                          alt="Product image"
-                          className="aspect-square rounded-md object-cover"
-                          height="64"
-                          src="/placeholder.svg"
-                          width="64"
-                        />
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {user.email}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">Draft</Badge>
-                      </TableCell>
-                      <TableCell>Company</TableCell>
-                      <TableCell className="hidden md:table-cell">26</TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button aria-haspopup="true" size="icon" variant="ghost">
-                              <MoreHorizontal className="h-4 w-4" />
-                              <span className="sr-only">Toggle menu</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+
+                <TableHeaderUser/>
+                <TableBodyUser data={data}/>
+
               </Table>
+
             </CardContent>
             <CardFooter>
               <div className="text-xs text-muted-foreground">
@@ -173,3 +93,5 @@ export default function TableUsers() {
     </>
   );
 }
+
+export default TableUsers;
