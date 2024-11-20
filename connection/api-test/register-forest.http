@@ -1,8 +1,8 @@
-GET http://localhost:8080/api/forest
+POST http://localhost:8080/api/forest
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMjA4ODQ0MCwidXNlcmlkIjoxfQ.3aTRikWtAWO-HGEUK8r1qTbBec5nRMnCd0y4tcM6D1c
 
 {
-	"fid" : 1
+	"name" : "Spruce Bark Beetle park",
+	"location" : "Universitetsplatsen 1, 352 52 Växjö, Suecia"
 }
-

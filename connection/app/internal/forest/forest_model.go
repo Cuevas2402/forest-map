@@ -21,13 +21,26 @@ type Tree struct {
 	Coordinates []Coordinate       `bson:"coordinates"`
 }
 
-type Zone struct {
+type ZoneMongo struct {
 	IDZone string `bson:"id_zone"`
 	Trees  []Tree `bson:"trees"`
 }
 
-type Forest struct {
+type ForestMongo struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty"`
 	ForestID string             `bson:"forest-id"`
-	Zones    []Zone             `bson:"zones"`
+	Zones    []ZoneMongo        `bson:"zones"`
+}
+
+type Forest struct {
+	Fid      int64
+	Name     string
+	Location string
+}
+
+type Zone struct {
+	Zid      int64
+	Fid      int64
+	Name     string
+	Location string
 }
