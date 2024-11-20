@@ -70,3 +70,15 @@ func forest(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "success", "forest": forest})
 
 }
+
+func forests(c *gin.Context) {
+
+	forests, err := GetAllForests()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"messsage": "success", "forests": forests})
+}

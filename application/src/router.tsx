@@ -10,6 +10,7 @@ import AuthProtection from './views/protection/AuthProtection';
 import Main from './layouts/main/Main';
 import UserProtection from './views/protection/UserProtection';
 import Companies from './views/companies/Companies';
+import Forests from './views/forests/Forests';
 
 const router = createBrowserRouter([
 	{
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
 			{
 				path:"/companies",
 				element:<Companies/>
+			},
+			{
+				path:"/forests",
+				element:<Forests/>
 			}
 
 		]

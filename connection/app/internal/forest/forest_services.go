@@ -83,7 +83,7 @@ func GetAllForests() ([]Forest, error) {
 		return forests, err
 	}
 
-	rows.Close()
+	defer rows.Close()
 
 	for rows.Next() {
 
