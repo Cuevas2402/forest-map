@@ -11,6 +11,7 @@ import Main from './layouts/main/Main';
 import UserProtection from './views/protection/UserProtection';
 import Companies from './views/companies/Companies';
 import Forests from './views/forests/Forests';
+import ZoneMap from './views/map/ZoneMap';
 
 const router = createBrowserRouter([
 	{
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
 			{
 				path:"/forests",
 				element:<Forests/>
+			},
+			{
+				path:"/map",
+				element:<ZoneMap/>
 			}
 
 		]

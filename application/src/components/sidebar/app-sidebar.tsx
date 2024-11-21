@@ -4,6 +4,7 @@ import {
   Bot,
   Command,
   Frame,
+  Map,
   SquareTerminal,
   Trees,
 } from "lucide-react"
@@ -90,6 +91,11 @@ const data = {
       name: "Home",
       url: "/",
       icon: Frame,
+    },
+    {
+      name: "Map",
+      url: "/map",
+      icon: Map,
     },
   ],
 }
