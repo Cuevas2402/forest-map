@@ -1,5 +1,5 @@
+import ZoneHeatMap from "@/components/ZoneHeatMap";
 import FormMenu from "./parts/FormMenu";
-import ZoneHeatMap from "./parts/ZoneHeatMap";
 
 const ZoneMap = () => {
 

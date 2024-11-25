@@ -125,7 +125,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function Component() {
+export default function BarGraph() {
 
 	const [activeChart, setActiveChart] =
 		React.useState<keyof typeof chartConfig>("desktop")
