@@ -36,6 +36,8 @@ type Forest struct {
 	Fid      int64
 	Name     string
 	Location string
+	Latitud  string
+	Longitud string
 }
 
 type Zone struct {
@@ -43,4 +45,8 @@ type Zone struct {
 	Fid      int64
 	Name     string
 	Location string
+}
+
+type ForestRequest struct {
+	Names []string `json:"names"`
 }

@@ -1,6 +1,3 @@
-import {
-	Rabbit,
-} from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -10,105 +7,93 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { Card } from "@/components/ui/card"
 
-const FormMenu = () => {
+import { TreesChart } from "./TreesChart"
+import { GlobalMapProps, TreesChartProps } from "@/interfaces/props"
+
+const FormMenu : React.FC<GlobalMapProps>= ({forests, curr, setCurr, dist, currDist, setCurrDist}) => {
+
+	const props : TreesChartProps = {
+		dist : currDist,
+	}
+
+	const handleValueChange = (value : string) => {
+		setCurr(forests[parseInt(value)])
+		setCurrDist(dist[parseInt(value)])
+	}
+
 	return (
 		<>
-			<form className="grid w-full items-start gap-6">
+			<div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-white px-2 lg:col-span-2">
 
-				<fieldset className="grid gap-6 rounded-lg border p-4">
+				<div className="grid-cols-1 grid-rows-2 w-full"> 
+					<div className="mb-3">
 
-					<legend className="-ml-1 px-1 text-sm font-medium">
-						Settings
-					</legend>
 
-					<div className="grid gap-3">
+						<Card>
 
-						<Label htmlFor="model">Zone</Label>
+							<fieldset className="grid gap-6 p-4">
 
-						<Select>
-							<SelectTrigger
-							id="model"
-							className="items-start [&_[data-description]]:hidden"
-							>
-							<SelectValue placeholder="Select a zone" />
-							</SelectTrigger>
-							<SelectContent>
-							<SelectItem value="genesis">
-								<div className="flex items-start gap-3 text-muted-foreground">
-								<Rabbit className="size-5" />
-								<div className="grid gap-0.5">
-									<p>
-									Neural{" "}
-									<span className="font-medium text-foreground">
-										Genesis
-									</span>
-									</p>
-									<p className="text-xs" data-description>
-									Our fastest model for general use cases.
-									</p>
+
+								<div className="grid gap-3">
+
+									<Label htmlFor="model">Zone</Label>
+
+									<Select onValueChange={(e) => handleValueChange(e)}>
+										<SelectTrigger
+											id="model"
+											className="items-start [&_[data-description]]:hidden"
+										>
+											<SelectValue placeholder={curr?.Name ? curr.Name : 'Backjson'} />
+										</SelectTrigger>
+										<SelectContent>
+											{
+												forests.map((forest, index) => (
+
+													<SelectItem key={forest.Fid} value={index.toString()}>
+														{forest.Name}
+													</SelectItem>
+												))
+											}
+										</SelectContent>
+									</Select>
+
 								</div>
+
+								<div className="grid gap-3">
+									<Label htmlFor="top-p">Location</Label>
+									<Input id="top-p" type="text" placeholder={curr?.Location ? curr.Location : 'Sweden'} disabled/>
 								</div>
-							</SelectItem>
-							</SelectContent>
-						</Select>
 
-					</div>
+								<div className="grid grid-cols-2 gap-4">
+									<div className="grid gap-3">
+										<Label htmlFor="top-p">Latitud</Label>
+										<Input id="top-p" type="text" placeholder={curr?.Latitud ? curr.Latitud : '50'} disabled/>
+									</div>
+									<div className="grid gap-3">
+										<Label htmlFor="top-k">Longitud</Label>
+										<Input id="top-k" type="text" placeholder={curr?.Longitud ? curr.Longitud :'50'} disabled />
+									</div>
+								</div>
 
-					<div className="grid gap-3">
-						<Label htmlFor="temperature">Temperature</Label>
-						<Input id="temperature" type="number" placeholder="0.4" />
-					</div>
+						</fieldset>
 
-					<div className="grid grid-cols-2 gap-4">
-						<div className="grid gap-3">
-							<Label htmlFor="top-p">Top P</Label>
-							<Input id="top-p" type="number" placeholder="0.7" />
-						</div>
-						<div className="grid gap-3">
-							<Label htmlFor="top-k">Top K</Label>
-							<Input id="top-k" type="number" placeholder="0.0" />
-						</div>
-					</div>
 
-              </fieldset>
+						</Card>
 
-              <fieldset className="grid gap-6 rounded-lg border p-4">
+				</div>
+				<div>
 
-					<legend className="-ml-1 px-1 text-sm font-medium">
-						Messages
-					</legend>
+					<TreesChart {...props}/>
 
-					<div className="grid gap-3">
+				</div>
 
-						<Label htmlFor="role">Role</Label>
 
-						<Select defaultValue="system">
-							<SelectTrigger>
-								<SelectValue placeholder="Select a role" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="system">System</SelectItem>
-								<SelectItem value="user">User</SelectItem>
-								<SelectItem value="assistant">Assistant</SelectItem>
-							</SelectContent>
-						</Select>
+			</div>
 
-					</div>
 
-					<div className="grid gap-3">
-						<Label htmlFor="content">Content</Label>
-						<Textarea
-							id="content"
-							placeholder="You are a..."
-							className="min-h-[9.5rem]"
-						/>
-					</div>
-
-              </fieldset>
-
-            </form>
+		</div>
 		
 		</>
 	)

@@ -2,10 +2,12 @@ package forest
 
 import (
 	"context"
+	"fmt"
 
 	"example.com/connection/app/pkg/db"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func (forest *ForestMongo) Get() (primitive.M, error) {
@@ -39,7 +41,7 @@ func (forest *ForestMongo) Get() (primitive.M, error) {
 
 func (forest *Forest) Save() error {
 	query := `
-		INSERT INTO forest (name, location) VALUES ($1, $2);
+		INSERT INTO forest (name, location, latitud, longitud) VALUES ($1, $2, $3, $4);
 	`
 
 	stmt, err := db.Postgre.Prepare(query)
@@ -50,7 +52,7 @@ func (forest *Forest) Save() error {
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(&forest.Name, &forest.Location)
+	_, err = stmt.Exec(&forest.Name, &forest.Location, &forest.Latitud, &forest.Longitud)
 
 	return err
 
@@ -89,7 +91,7 @@ func GetAllForests() ([]Forest, error) {
 
 		var forest Forest
 
-		err = rows.Scan(&forest.Fid, &forest.Name, &forest.Location)
+		err = rows.Scan(&forest.Fid, &forest.Name, &forest.Location, &forest.Latitud, &forest.Longitud)
 
 		if err != nil {
 			return forests, err
@@ -100,4 +102,46 @@ func GetAllForests() ([]Forest, error) {
 	}
 
 	return forests, nil
+}
+
+func GetTreesClassesDistribution(forests []string) ([][]primitive.M, error) {
+	var aggregatedResults [][]primitive.M
+
+	for _, s := range forests {
+		collection := db.Mongo.Database("forest-data").Collection(s)
+
+		pipeline := mongo.Pipeline{
+			{{Key: "$unwind", Value: "$zones"}},
+			{{Key: "$unwind", Value: "$zones.trees"}},
+			{{
+				Key: "$group",
+				Value: bson.D{
+					{Key: "_id", Value: "$zones.trees.class"},
+					{Key: "total", Value: bson.D{{Key: "$sum", Value: 1}}},
+				},
+			}},
+		}
+
+		cursor, err := collection.Aggregate(context.Background(), pipeline)
+		if err != nil {
+			return nil, fmt.Errorf("error agregando datos de %s: %v", s, err)
+		}
+		defer cursor.Close(context.Background())
+		var results []primitive.M
+		for cursor.Next(context.Background()) {
+			var result primitive.M
+			if err := cursor.Decode(&result); err != nil {
+				return nil, fmt.Errorf("error decodificando resultado de %s: %v", s, err)
+			}
+			results = append(results, result)
+		}
+
+		if err := cursor.Err(); err != nil {
+			return nil, fmt.Errorf("error en el cursor de %s: %v", s, err)
+		}
+
+		aggregatedResults = append(aggregatedResults, results)
+	}
+
+	return aggregatedResults, nil
 }

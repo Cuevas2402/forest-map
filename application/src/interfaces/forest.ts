@@ -1,7 +1,9 @@
 interface Forest {
 	Fid : number,
 	Name : string,
-	Location : string
+	Location : string,
+	Latitud: string,
+	Longitud: string,
 }
 
 

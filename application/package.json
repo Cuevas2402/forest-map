@@ -43,6 +43,7 @@
     "recharts": "^2.12.7",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "spin.js": "^4.1.2",
     "sweetalert2": "^11.14.3",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",

@@ -8,5 +8,7 @@ func ForestRouter(authenticated *gin.RouterGroup) {
 	authenticated.POST("/api/forest", saveForest)
 	authenticated.GET("/api/forest", forest)
 	authenticated.GET("/api/forests", forests)
+	authenticated.POST("/api/forest/trees/classes", getTreesClassesDistribution)
+	authenticated.GET("/api/forests/map", getMapaData)
 
 }

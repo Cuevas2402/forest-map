@@ -1,6 +1,7 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import HeatmapLayer from "react-leaflet-heat-layer";
 import "leaflet/dist/leaflet.css";
+import { Card } from "./ui/card";
 
 const ZoneHeatMap = () => {
 
@@ -16,9 +17,11 @@ const ZoneHeatMap = () => {
 	}
 
 	return (
-		<div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
+		<div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-white p-4 lg:col-span-2">
 
-			<div className="h-[600px] w-full"> 
+			<Card>
+
+			<div className="p-5 h-[600px] w-full"> 
 
 				<MapContainer
 					center={[51.505, -0.09]}
@@ -37,6 +40,8 @@ const ZoneHeatMap = () => {
 				</MapContainer>
 
 			</div>
+
+			</Card>
 
 		</div>
 
