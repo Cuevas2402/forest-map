@@ -18,7 +18,8 @@ const Forests = () => {
 	useEffect( () =>  { 
 		handleGetData()
 	}
-	, [data]);
+	, []);
+
 
 	return (
 		<>

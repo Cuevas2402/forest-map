@@ -2,7 +2,7 @@ import { createBrowserRouter} from 'react-router-dom';
 import Auth from "./layouts/Auth";
 import Login from './views/login/Login';
 import Dashboard from './views/dashboard/Dashboard';
-import Forest from './views/forest/Forest';
+import ForestView from './views/forest/Forest';
 import Users from './views/users/Users';
 import Upload from './views/upload/Upload';
 //import UserProtection from './views/protection/UserProtection';
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path:"/forest/:id",
-				element:<Forest/>,
+				element:<ForestView/>,
 			},
 			{
 				path:"/trees/upload",
