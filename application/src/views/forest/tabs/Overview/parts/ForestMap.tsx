@@ -3,11 +3,13 @@ import HeatmapLayer from "react-leaflet-heat-layer";
 import "leaflet/dist/leaflet.css";
 import { Card } from "@/components/ui/card";
 import useForest from "@/hooks/useForest";
+import Spinner from "@/components/Spinner";
 
 const ForestMap = () => {
 
 	const {coordenates} = useForest();
 
+	if(!coordenates) { return <Spinner/> }
 
 	const addressPoints = [];
 

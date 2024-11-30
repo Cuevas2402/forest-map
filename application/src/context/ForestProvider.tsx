@@ -39,11 +39,12 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 		([url, Fid]) => fetcher(url, Fid)
 	);
 
-	useEffect(()=>{
+	useEffect(() => {
 		if (forest.length > 0) {
-			setCoordenates({x : parseFloat(forest[0].Latitud), y : parseFloat(forest[0].Longitud)})
+			const { Latitud, Longitud } = forest[0];
+			setCoordenates({ x: parseFloat(Latitud), y: parseFloat(Longitud) });
 		}
-	},[forest])
+	}, [forest]);
 
 
 	useEffect(() => {
