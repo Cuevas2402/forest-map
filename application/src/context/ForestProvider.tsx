@@ -17,6 +17,8 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 	const [classesData, setClassesData] = useState<any>(null);
 	const [typesData, setTypesData] = useState<any>(null);
 
+	const [coordenates, setCoordenates] = useState<any>(null);
+
 
 	const { id } = useParams<{ id: string }>();
 	const client = useClient();
@@ -36,6 +38,13 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 		['/forest/overview', parseInt(id || '3')],
 		([url, Fid]) => fetcher(url, Fid)
 	);
+
+	useEffect(()=>{
+		if (forest.length > 0) {
+			setCoordenates({x : parseFloat(forest[0].Latitud), y : parseFloat(forest[0].Longitud)})
+		}
+	},[forest])
+
 
 	useEffect(() => {
 
@@ -86,7 +95,7 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 
 
 	return (
-		<ForestContext.Provider value={{ forest, classes, types, healthData, classesData, typesData}}>
+		<ForestContext.Provider value={{ forest, classes, types, healthData, classesData, typesData, coordenates}}>
 			{children}
 		</ForestContext.Provider>
 	);
