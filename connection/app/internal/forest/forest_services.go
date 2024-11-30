@@ -59,12 +59,12 @@ func (forest *Forest) Save() error {
 
 func (forest *Forest) Get() error {
 	query := `
-		SELECT name, location FROM forest WHERE fid = $1;
+		SELECT name, location, latitud, longitud FROM forest WHERE fid = $1;
 	`
 
 	row := db.Postgre.QueryRow(query, forest.Fid)
 
-	err := row.Scan(&forest.Name, &forest.Location)
+	err := row.Scan(&forest.Name, &forest.Location, &forest.Latitud, &forest.Longitud)
 
 	return err
 
