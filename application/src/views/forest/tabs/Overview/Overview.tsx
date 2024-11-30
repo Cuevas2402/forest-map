@@ -6,9 +6,9 @@ const Overview = () => {
 	return (
 
 		<>
-			<div className="grid grid-cols-1 gap-4">
+			<div className="grid grid-cols-1 w-full gap-4">
 
-				<div className="h-full grid grid-cols-3 grid-rows-1 gap-4">
+				<div className="h-full w-full grid grid-cols-3 grid-rows-1 gap-4">
 
 					<ForestGraphs/>
 

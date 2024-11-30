@@ -26,7 +26,7 @@ export default function TypesChart() {
 	const {typesData} = useForest();
 
 	return (
-			<Card className="h-full">
+			<Card className="w-full h-full">
 
 				<CardHeader className="items-center">
 					<CardTitle>Trees Species</CardTitle>

@@ -47,13 +47,13 @@ export default function ClassesChart() {
 	const {classesData} = useForest();
 	return (
 
-		<Card>
+		<Card className="w-auto h-full">
 
-			<CardHeader className="items-center">
+			<CardHeader className="items-center mb-10">
 				<CardTitle>Trees health</CardTitle>
 			</CardHeader>
 
-			<CardContent>
+			<CardContent className="items-center">
 
 				<ChartContainer config={chartConfig}>
 					<BarChart

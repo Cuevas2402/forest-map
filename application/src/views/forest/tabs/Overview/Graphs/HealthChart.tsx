@@ -32,7 +32,7 @@ export default function HealthChart() {
 	const { healthData} = useForest();
 
 	return (
-		<Card className="h-full">
+		<Card className="w-full h-full">
 
 			<CardHeader className="items-center pb-0">
 				<CardTitle>Forest health</CardTitle>

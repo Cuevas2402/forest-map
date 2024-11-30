@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ForestInfo from "./parts/ForestInfo";
 import Overview from "./tabs/Overview/Overview";
+import Zones from "./tabs/Zones/Zones";
 
 export default function ForestView(){
 	return (
@@ -33,6 +34,12 @@ export default function ForestView(){
 						<TabsContent value="overview">
 
 							<Overview/>
+
+
+						</TabsContent>
+						<TabsContent value="zones">
+
+							<Zones/>
 
 
 						</TabsContent>
