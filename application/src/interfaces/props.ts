@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Forest from "./forest";
 
 export interface GlobalMapProps {
@@ -17,3 +18,14 @@ export interface TreesDist {
 export interface TreesChartProps {
 	dist : TreesDist[],
 }
+
+export  interface ForestProviderProps {
+	children : ReactNode
+}
+
+export interface TypesDist{
+	_id: number,
+	total: number,
+}
+
+

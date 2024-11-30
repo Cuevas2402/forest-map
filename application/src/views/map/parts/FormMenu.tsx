@@ -63,17 +63,17 @@ const FormMenu : React.FC<GlobalMapProps>= ({forests, curr, setCurr, dist, currD
 
 								<div className="grid gap-3">
 									<Label htmlFor="top-p">Location</Label>
-									<Input id="top-p" type="text" placeholder={curr?.Location ? curr.Location : 'Sweden'} disabled/>
+									<Input id="top-p" type="text" placeholder={curr?.Location ? curr.Location : 'Sweden'} readOnly/>
 								</div>
 
 								<div className="grid grid-cols-2 gap-4">
 									<div className="grid gap-3">
 										<Label htmlFor="top-p">Latitud</Label>
-										<Input id="top-p" type="text" placeholder={curr?.Latitud ? curr.Latitud : '50'} disabled/>
+										<Input id="top-p" type="text" placeholder={curr?.Latitud ? curr.Latitud : '50'} readOnly/>
 									</div>
 									<div className="grid gap-3">
 										<Label htmlFor="top-k">Longitud</Label>
-										<Input id="top-k" type="text" placeholder={curr?.Longitud ? curr.Longitud :'50'} disabled />
+										<Input id="top-k" type="text" placeholder={curr?.Longitud ? curr.Longitud :'50'} readOnly/>
 									</div>
 								</div>
 

@@ -12,6 +12,7 @@ import UserProtection from './views/protection/UserProtection';
 import Companies from './views/companies/Companies';
 import Forests from './views/forests/Forests';
 import ZoneMap from './views/map/ZoneMap';
+import { ForestProvider } from './context/ForestProvider';
 
 const router = createBrowserRouter([
 	{
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path:"/forest/:id",
-				element:<ForestView/>,
+				element:<ForestProvider><ForestView/></ForestProvider>,
 			},
 			{
 				path:"/trees/upload",

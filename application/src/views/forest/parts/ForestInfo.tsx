@@ -2,9 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent,CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useForest from "@/hooks/useForest";
 import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ForestInfo = () => {
+
+	const {forest} = useForest();
 
 	return (
 		<>
@@ -12,10 +16,12 @@ const ForestInfo = () => {
 
 				<div className="flex items-center gap-4">
 
-					<Button variant="outline" size="icon" className="h-7 w-7">
-						<ChevronLeft className="h-4 w-4" />
-						<span className="sr-only">Back</span>
-					</Button>
+					<Link to="/forests">
+						<Button variant="outline" size="icon" className="h-7 w-7">
+							<ChevronLeft className="h-4 w-4" />
+							<span className="sr-only">Back</span>
+						</Button>
+					</Link>
 
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
 						Forest
@@ -27,7 +33,7 @@ const ForestInfo = () => {
 							Discard
 						</Button>
 
-						<Button size="sm">Save Product</Button>
+						<Button size="sm">Edit</Button>
 					</div>
 
 				</div>
@@ -50,19 +56,43 @@ const ForestInfo = () => {
 										id="name"
 										type="text"
 										className="w-full"
-										defaultValue="Gamer Gear Pro Controller"
+										defaultValue={forest[0].Name || "Backsjon"}
+										readOnly
 										/>
 									</div>
-								<div className="grid gap-3">
-									<Label htmlFor="description">Location</Label>
-										<Input
-										id="name"
-										type="text"
-										className="w-full"
-										defaultValue="Gamer Gear Pro Controller"
-										/>
+									<div className="grid gap-3">
+										<Label htmlFor="description">Location</Label>
+											<Input
+											id="name"
+											type="text"
+											className="w-full"
+											defaultValue={forest[0].Location || "Sweden"}
+											readOnly
+											/>
+									</div>
+									<div className="grid gap-3">
+										<Label htmlFor="description">Latitud</Label>
+											<Input
+											id="name"
+											type="text"
+											className="w-full"
+											defaultValue={forest[0].Latitud || "Sweden"}
+											readOnly
+											/>
+									</div>
+									<div className="grid gap-3">
+										<Label htmlFor="description">Location</Label>
+											<Input
+											id="name"
+											type="text"
+											className="w-full"
+											defaultValue={forest[0].Longitud || "Sweden"}
+											readOnly
+											/>
+									</div>
+
 								</div>
-								</div>
+
 							</CardContent>
 						</Card>
 					</div>

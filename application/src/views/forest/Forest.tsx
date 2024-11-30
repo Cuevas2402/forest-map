@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ForestInfo from "./parts/ForestInfo";
-import Overview from "./tabs/Overview";
+import Overview from "./tabs/Overview/Overview";
 
 export default function ForestView(){
 	return (
