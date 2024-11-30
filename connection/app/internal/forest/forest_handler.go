@@ -134,3 +134,39 @@ func getMapaData(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "success", "forests": forests, "classes": results})
 
 }
+
+func getForestOverview(c *gin.Context) {
+
+	var forest Forest
+
+	err := c.ShouldBindJSON(&forest)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	err = forest.Get()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	classes, err := GetTreesClassesDistribution([]string{forest.Name})
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	types, err := GetTreesTypesDistribution([]string{forest.Name})
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "forest": forest, "classes": classes, "types": types})
+
+}

@@ -2,7 +2,6 @@ package forest
 
 import (
 	"context"
-	"fmt"
 
 	"example.com/connection/app/pkg/db"
 	"go.mongodb.org/mongo-driver/bson"
@@ -124,24 +123,72 @@ func GetTreesClassesDistribution(forests []string) ([][]primitive.M, error) {
 
 		cursor, err := collection.Aggregate(context.Background(), pipeline)
 		if err != nil {
-			return nil, fmt.Errorf("error agregando datos de %s: %v", s, err)
+			return nil, err
 		}
 		defer cursor.Close(context.Background())
 		var results []primitive.M
 		for cursor.Next(context.Background()) {
 			var result primitive.M
 			if err := cursor.Decode(&result); err != nil {
-				return nil, fmt.Errorf("error decodificando resultado de %s: %v", s, err)
+				return nil, err
 			}
 			results = append(results, result)
 		}
 
 		if err := cursor.Err(); err != nil {
-			return nil, fmt.Errorf("error en el cursor de %s: %v", s, err)
+			return nil, err
 		}
 
 		aggregatedResults = append(aggregatedResults, results)
 	}
 
 	return aggregatedResults, nil
+}
+
+func GetTreesTypesDistribution(forests []string) ([][]primitive.M, error) {
+
+	var aggregatedResults [][]primitive.M
+
+	for _, s := range forests {
+		collection := db.Mongo.Database("forest-data").Collection(s)
+
+		pipeline := mongo.Pipeline{
+			{{Key: "$unwind", Value: "$zones"}},
+			{{Key: "$unwind", Value: "$zones.trees"}},
+			{{
+				Key: "$group",
+				Value: bson.D{
+					{Key: "_id", Value: "$zones.trees.species"},
+					{Key: "total", Value: bson.D{{Key: "$sum", Value: 1}}},
+				},
+			}},
+		}
+
+		cursor, err := collection.Aggregate(context.Background(), pipeline)
+
+		if err != nil {
+			return nil, err
+		}
+
+		defer cursor.Close(context.Background())
+
+		var results []primitive.M
+		for cursor.Next(context.Background()) {
+			var result primitive.M
+			if err := cursor.Decode(&result); err != nil {
+				return nil, err
+			}
+			results = append(results, result)
+		}
+
+		if err := cursor.Err(); err != nil {
+			return nil, err
+		}
+
+		aggregatedResults = append(aggregatedResults, results)
+
+	}
+
+	return aggregatedResults, nil
+
 }
