@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/forest/overview
+POST http://localhost:8080/api/forest/info
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMjk0NzIyOSwidXNlcmlkIjoxfQ.lyZDiln1Hu55LGNXw6BZO0r15KVx3HxfqettNR6rLOY
 

@@ -135,7 +135,7 @@ func getMapaData(c *gin.Context) {
 
 }
 
-func getForestOverview(c *gin.Context) {
+func getForestInfo(c *gin.Context) {
 
 	var forest Forest
 

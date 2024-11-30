@@ -35,7 +35,7 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 	};
 
 	const { data , error, isLoading } = useSWR(
-		['/forest/overview', parseInt(id || '3')],
+		['/forest/info', parseInt(id || '3')],
 		([url, Fid]) => fetcher(url, Fid)
 	);
 
