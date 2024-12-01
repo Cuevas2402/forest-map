@@ -31,7 +31,7 @@ export default function ZoneTypes() {
 		total: ty.total
 	}))
 	return (
-		<Card className="w-fs Speciesl">
+		<Card className="w-full h-full">
 
 			<CardHeader className="items-center">
 				<CardTitle>Trees Species</CardTitle>

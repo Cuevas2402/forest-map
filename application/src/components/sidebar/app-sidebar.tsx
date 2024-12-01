@@ -2,6 +2,7 @@ import * as React from "react"
 import {
   AudioWaveform,
   Bot,
+  ChartBarIncreasing,
   Command,
   Frame,
   Map,
@@ -69,19 +70,26 @@ const data = {
     {
       title: "Analysis",
       url: "#",
+      icon: ChartBarIncreasing,
+      items: [
+        {
+          title: "Upload analysis",
+          url: "/trees/upload",
+        },
+      ],
+    },
+    {
+      title: "Models",
+      url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Test",
+          url: "/trees/upload",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Train",
+          url: "/trees/upload",
         },
       ],
     },
