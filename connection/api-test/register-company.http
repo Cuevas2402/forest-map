@@ -1,7 +1,7 @@
 POST http://localhost:8080/api/company
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMDkyMTc2NywidXNlcmlkIjoxfQ.v1j_XfQZeMNoNyStO4bcKMQSCdZ7gvr0KgHALDcmSdw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMzA5NDIyNywidXNlcmlkIjoxfQ.LDd7wYLJHwjJFsc-aKfHRxhInyLKWCggAGRg6oKNmSM
 
 {
-	"name" : "Company 2"
+	"name" : "Company 3"
 }

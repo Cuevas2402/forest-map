@@ -25,6 +25,7 @@ import { File, ListFilter, PlusCircle } from "lucide-react";
 import TableHeaderCompanies from "./TableHeaderCompanies";
 import TableBodyCompanies from "./TableBodyCompanies";
 import Company from "@/interfaces/company";
+import { Link } from "react-router-dom";
 
 interface TableUsersProps {
   data : Company[],
@@ -59,12 +60,14 @@ const TableUsers : React.FC<TableUsersProps> = ({data}) => {
                 Export
               </span>
             </Button>
+            <Link to="/company/create">
             <Button size="sm" className="h-7 gap-1">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Add User
+                Add Company
               </span>
             </Button>
+            </Link>
           </div>
         </div>
         <TabsContent value="all">

@@ -1,31 +1,32 @@
 import useClient from "@/hooks/useClient";
 import TableCompanies from "./parts/TableCompanies";
+import useSWR from "swr";
+import Spinner from "@/components/Spinner";
 import Company from "@/interfaces/company";
-import { useEffect, useState } from "react";
 
 const Companies = () => {
 
 	const client = useClient();
 
-	const [data, setData] = useState<Company[]>([]);
-
-	const handleGetData = async () => {
+	const fetcher = async () => {
 		const response = await client.get("/companies");
-		console.log(response.data.companies);
-		setData(response.data.companies);
+		const companies : Company[] = response.data.companies || []
+		return companies
 	}
 
-	useEffect( () =>  { 
-		handleGetData()
-	}
-	, [data]);
+	const {data, error, isLoading} = useSWR("/api/companies", fetcher)
+
+	if (data){}
+	if (error){ return <div>Error al cargar los datos</div>}
+	if (isLoading) { return <Spinner/> }
+
 
 	return (
 		<>
 
 			<div className="w-full h-full p-5">
 
-				<TableCompanies data={data}/>
+				<TableCompanies data={data || [] }/>
 
 			</div>
 		

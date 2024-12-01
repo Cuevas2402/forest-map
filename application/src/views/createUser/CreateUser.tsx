@@ -42,7 +42,7 @@ export default function CreateUser(){
 		}
 
 		try {
-			const response : any = client.post("/register/user", {user, usermapping})
+			client.post("/register/user", {user, usermapping})
 
 			Swal.fire({
 				title: "OK!",

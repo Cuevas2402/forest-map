@@ -14,6 +14,7 @@ import Forests from './views/forests/Forests';
 import ZoneMap from './views/map/ZoneMap';
 import { ForestProvider } from './context/ForestProvider';
 import CreateUser from './views/createUser/CreateUser';
+import CreateCompany from './views/createCompany/CreateCompany';
 
 const router = createBrowserRouter([
 	{
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
 			{
 				path:"/companies",
 				element:<Companies/>
+			},
+			{
+				path:"/company/create",
+				element:<CreateCompany/>
 			},
 			{
 				path:"/forests",
