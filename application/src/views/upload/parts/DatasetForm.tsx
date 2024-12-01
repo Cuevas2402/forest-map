@@ -7,6 +7,19 @@ import DangerAlert from "@/components/DangerAlert";
 import { Button } from "@/components/ui/button";
 import Swal from 'sweetalert2'
 import useClient from "@/hooks/useClient";
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Forest from "@/interfaces/forest";
+import useSWR from "swr";
+import Spinner from "@/components/Spinner";
 
 
 interface Errors {
@@ -38,7 +51,7 @@ export default function Dataset( { setProgress } : DatasetProps) {
         const response = await client.post(`/upload/${url}`, form, {
             onUploadProgress : (progressEvent) => {
                 if (progressEvent.total != undefined) { 
-                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    //const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
                 }
             }
@@ -138,13 +151,29 @@ export default function Dataset( { setProgress } : DatasetProps) {
 
     };
 
+    const [date, setDate] = useState<Date>()
+
+    const client = useClient();
+
+    const fetcher = async () => {
+        const response = await client.get("/forests")
+        const forests : Forest[] = response.data.forests
+        return forests || []
+    }
+
+    const {data, error, isLoading}  = useSWR("/api/forests", fetcher)
+
+    if (error) { return <div>Error al cargar los datos</div>}
+    if (isLoading) { return <Spinner/> }
+
+
     return (
         <>
             <Card x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
                     <CardTitle>Dataset <Badge>?</Badge></CardTitle>
                     <CardDescription>
-                        Manage your products and view their sales performance.
+                        Upload a analysis of a forest
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -155,9 +184,59 @@ export default function Dataset( { setProgress } : DatasetProps) {
                     }
 
                     <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+
+                        <Select>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select a forest" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                <SelectLabel>Forests</SelectLabel>
+
+                                {
+                                    data?.map((forest : Forest) => (
+
+                                        <SelectItem key={forest.Fid} value={forest.Fid.toString()}>{forest.Name}</SelectItem>
+
+                                    ))
+                                }
+                                
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                        </div>
+                        <div className="mb-4">
+
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                variant={"outline"}
+                                className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !date && "text-muted-foreground"
+                                )}
+                                >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0">
+                                <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={setDate}
+                                initialFocus
+                                />
+                            </PopoverContent>
+                            </Popover>
+
+                        </div>
+
                         <div className="my-2">
-                            <Label htmlFor="name">Name</Label>
-                            <Input type="text" placeholder="zone name" ref={nameRef} required />
+                            <Label htmlFor="csv">CSV</Label>
+                            <Input id="csv" type="file" ref={csvRef} required />
                         </div>
 
                         <div className="my-2">
