@@ -16,6 +16,11 @@ func usermapping(c *gin.Context) {
 		return
 	}
 
+	if err = usermapping.Save(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"messag": "sucess", "usermapping": usermapping})
 
 }

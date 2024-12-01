@@ -1,3 +1,17 @@
-GET http://localhost:8080/api/users
+POST http://localhost:8080/api/register/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMzA4OTc5OCwidXNlcmlkIjoxfQ.Nq3HmdJTcRbw2xNfB2QJfU-50o3y8TVOkWkxv5LZw3I
+
+{
+	"user": {
+		"FirstName" : "abc",
+		"LastName" :"a",
+		"Email" : "b",
+		"Password" : "c"
+	}, 
+	"usermapping": {
+		"Rid": 2, 
+		"Cid": 3
+	}
+
+}

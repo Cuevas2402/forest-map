@@ -24,26 +24,28 @@ func (u *User) Get() error {
 
 }
 
-func (u *User) Save() error {
-	query := `INSERT INTO users (firstName, lastName, email, password) VALUES ($1,$2,$3,$4)`
+func (u *User) Save() (int64, error) {
+	query := `INSERT INTO users (firstName, lastName, email, password) VALUES ($1, $2, $3, $4) RETURNING uid`
 
 	stmt, err := db.Postgre.Prepare(query)
-
 	if err != nil {
-		return err
+		return 0, err
 	}
-
 	defer stmt.Close()
 
 	hpassword, err := utils.HashPassword(u.Password)
-
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	_, err = stmt.Exec(u.FirstName, u.LastName, u.Email, hpassword)
-	return err
+	var userID int64
 
+	err = stmt.QueryRow(u.FirstName, u.LastName, u.Email, hpassword).Scan(&userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return userID, nil
 }
 
 func (u *User) Validate() error {

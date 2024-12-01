@@ -20,5 +20,6 @@ func UserRoutes(authenticated *gin.RouterGroup) {
 
 	authenticated.GET("/api/perfiles", profiles)
 	authenticated.GET("/api/perfiles/:id", profile)
+	authenticated.POST("/api/register/user", registerUserWithMapping)
 
 }

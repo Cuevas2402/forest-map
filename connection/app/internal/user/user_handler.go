@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -19,7 +20,7 @@ func register(context *gin.Context) {
 		return
 	}
 
-	err = user.Save()
+	_, err = user.Save()
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
@@ -188,5 +189,37 @@ func getUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "success", "user": user})
+
+}
+
+func registerUserWithMapping(c *gin.Context) {
+
+	var data struct {
+		User        User                    `json:"user"`
+		Usermapping usermapping.UserMapping `json:"usermapping"`
+	}
+
+	var err error
+
+	if err = c.ShouldBindJSON(&data); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	if data.Usermapping.Uid, err = data.User.Save(); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	data.Usermapping.Status = "active"
+
+	log.Println((data.Usermapping))
+
+	if err = data.Usermapping.Save(); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "data": data})
 
 }
