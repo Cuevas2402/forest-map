@@ -16,6 +16,7 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 	const [healthData, setHealthData] = useState<any>(null);
 	const [classesData, setClassesData] = useState<any>(null);
 	const [typesData, setTypesData] = useState<any>(null);
+	const [currZone, setCurrZone] = useState<number>(1);
 
 	const [coordenates, setCoordenates] = useState<any>(null);
 
@@ -33,6 +34,11 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 
 		return response.data;
 	};
+
+	const fetcherZone = async(url: string, Name: string, Zid: number) => {
+		const response = await client.post(url, {Name, Zid});
+		return response.data
+	}
 
 	const { data , error, isLoading } = useSWR(
 		['/forest/info', parseInt(id || '3')],
@@ -90,6 +96,15 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 
 	if (isLoading) return <Spinner />;
 
+
+	const { data : zoneData , error: zoneError, isLoading: zoneLoading} = useSWR(
+		['/forest/zone', forest[0].Name, currZone],
+		([url, Name, Zid]) => fetcherZone(url, Name, Zid)
+	);
+
+	if (zoneError) return <div>Error al cargar los datos</div>;
+
+	if (zoneLoading) return <Spinner />;
 
 
 

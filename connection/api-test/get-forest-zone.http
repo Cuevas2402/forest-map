@@ -1,7 +1,8 @@
-POST http://localhost:8080/api/forest/info
+POST http://localhost:8080/api/forest/zone
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4uY3VldmFzZ0B1ZGVtLmVkdSIsImV4cCI6MTczMzA0MjQ0NCwidXNlcmlkIjoxfQ.dBXH7Ll-Td2smhWNkVnLYL-UAQm1hn40GwoTJcKb280
 
 {
-	"Fid" : 3
+	"Name" : "Backsjon",
+	"Zid" : "1"
 }

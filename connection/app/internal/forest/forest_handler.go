@@ -170,3 +170,41 @@ func getForestInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "success", "forest": forest, "classes": classes, "types": types})
 
 }
+
+func getForestZone(c *gin.Context) {
+	var jsonData map[string]interface{}
+
+	err := c.ShouldBindJSON(&jsonData)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	name, ok := jsonData["Name"].(string)
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid Name"})
+		return
+	}
+
+	zid, ok := jsonData["Zid"].(string)
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Invalid Zid"})
+		return
+	}
+
+	types, err := GetForestTypesByZone(name, zid)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	fmt.Println("Types:", types)
+
+	classes, err := GetForestClassesByZone(name, zid)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	fmt.Println("Classes:", classes)
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "types": types, "classes": classes})
+}

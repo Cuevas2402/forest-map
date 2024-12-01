@@ -2,6 +2,7 @@ package forest
 
 import (
 	"context"
+	"time"
 
 	"example.com/connection/app/pkg/db"
 	"go.mongodb.org/mongo-driver/bson"
@@ -191,4 +192,146 @@ func GetTreesTypesDistribution(forests []string) ([][]primitive.M, error) {
 
 	return aggregatedResults, nil
 
+}
+
+func GetForestZones(forests []string) ([][]primitive.M, error) {
+	var aggregatedResults [][]primitive.M
+
+	for _, s := range forests {
+
+		collection := db.Mongo.Database("forest-data").Collection(s)
+
+		pipeline := mongo.Pipeline{
+			{
+				{Key: "$unwind", Value: "$zones"},
+			},
+			{
+				{Key: "$project", Value: bson.D{
+					{Key: "_id", Value: 0},
+					{Key: "zones", Value: bson.A{
+						bson.D{
+							{Key: "id_zone", Value: "$zones.id_zone"},
+							{Key: "trees", Value: "$zones.trees"},
+						},
+					}},
+				}},
+			},
+		}
+
+		cursor, err := collection.Aggregate(context.Background(), pipeline)
+		if err != nil {
+			return nil, err
+		}
+
+		defer cursor.Close(context.Background())
+
+		var results []primitive.M
+
+		for cursor.Next(context.Background()) {
+
+			var result primitive.M
+			if err := cursor.Decode(&result); err != nil {
+				return nil, err
+			}
+			results = append(results, result)
+
+		}
+
+		if err := cursor.Err(); err != nil {
+			return nil, err
+		}
+
+		aggregatedResults = append(aggregatedResults, results)
+
+	}
+
+	return aggregatedResults, nil
+}
+
+func GetForestTypesByZone(name string, zid string) ([]primitive.M, error) {
+
+	var aggregatedResults []primitive.M
+
+	collection := db.Mongo.Database("forest-data").Collection(name)
+
+	pipeline := mongo.Pipeline{
+		{{Key: "$unwind", Value: "$zones"}},
+		{{
+			Key: "$match",
+			Value: bson.D{
+				{Key: "zones.id_zone", Value: zid},
+			},
+		}},
+		{{Key: "$unwind", Value: "$zones.trees"}},
+		{{
+			Key: "$group",
+			Value: bson.D{
+				{Key: "_id", Value: "$zones.trees.class"},
+				{Key: "total", Value: bson.D{{Key: "$sum", Value: 1}}},
+			},
+		}},
+	}
+
+	cursor, err := collection.Aggregate(context.Background(), pipeline)
+	if err != nil {
+		return nil, err
+	}
+
+	defer cursor.Close(context.Background())
+
+	if err = cursor.All(context.TODO(), &aggregatedResults); err != nil {
+		return nil, err
+	}
+
+	return aggregatedResults, nil
+
+}
+
+func GetForestClassesByZone(name string, zid string) ([]primitive.M, error) {
+	var aggregatedResults []primitive.M
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	collection := db.Mongo.Database("forest-data").Collection(name)
+
+	pipeline := mongo.Pipeline{
+		{{Key: "$unwind", Value: "$zones"}},
+		{{
+			Key: "$match",
+			Value: bson.D{
+				{Key: "zones.id_zone", Value: zid},
+			},
+		}},
+		{{Key: "$unwind", Value: "$zones.trees"}},
+		{{
+			Key: "$group",
+			Value: bson.D{
+				{Key: "_id", Value: "$zones.trees.class"},
+				{Key: "total", Value: bson.D{{Key: "$sum", Value: 1}}},
+			},
+		}},
+	}
+
+	cursor, err := collection.Aggregate(ctx, pipeline)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer cursor.Close(ctx)
+
+	for cursor.Next(ctx) {
+		var result primitive.M
+		if err := cursor.Decode(&result); err != nil {
+			return nil, err
+		}
+		aggregatedResults = append(aggregatedResults, result)
+	}
+
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+
+	return aggregatedResults, nil
 }
