@@ -12,30 +12,47 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-	{ month: "January", desktop: 186, mobile: 80 },
-	{ month: "February", desktop: 305, mobile: 200 },
-	{ month: "March", desktop: 237, mobile: 120 },
-	{ month: "April", desktop: 73, mobile: 190 },
-	{ month: "May", desktop: 209, mobile: 130 },
-	{ month: "June", desktop: 214, mobile: 140 },
-]
+import useZone from "@/hooks/useZone"
+import { TreesDist } from "@/interfaces/props"
 
 const chartConfig = {
-	desktop: {
-		label: "Desktop",
+	class: {
+		label: "Class",
 		color: "hsl(var(--chart-1))",
 	},
-	mobile: {
-		label: "Mobile",
+	healthy: {
+		label: "Healthy",
+		color: "hsl(var(--chart-1))",
+	},
+	light: {
+		label: "Light",
 		color: "hsl(var(--chart-2))",
 	},
-	label: {
-		color: "hsl(var(--background))",
+	moderate: {
+		label: "Moderate",
+		color: "hsl(var(--chart-3))",
+	},
+	several: {
+		label: "Several",
+		color: "hsl(var(--chart-4))",
+	},
+	death: {
+		label: "Death",
+		color: "hsl(var(--chart-5))",
 	},
 } satisfies ChartConfig
 
+
 export default function ZonesClasses() {
+    const keys: string[] = ["healthy", "light", "moderate", "several", "death"];
+
+	const {zoneData} = useZone();
+
+	const classesZone = zoneData.classes.map((clss : TreesDist) => ({
+		category: keys[clss._id - 1],
+		class: clss.total,
+		fill: `var(--color-${keys[clss._id - 1]})`
+	}))
 	return (
 		<Card className="w-full h-full">
 			<CardHeader className="mb-10 flex items-center justify-center">
@@ -45,7 +62,7 @@ export default function ZonesClasses() {
 				<ChartContainer config={chartConfig}>
 				<BarChart
 					accessibilityLayer
-					data={chartData}
+					data={classesZone}
 					layout="vertical"
 					margin={{
 					right: 16,
@@ -53,7 +70,7 @@ export default function ZonesClasses() {
 				>
 					<CartesianGrid horizontal={false} />
 					<YAxis
-					dataKey="month"
+					dataKey="category"
 					type="category"
 					tickLine={false}
 					tickMargin={10}
@@ -61,26 +78,26 @@ export default function ZonesClasses() {
 					tickFormatter={(value) => value.slice(0, 3)}
 					hide
 					/>
-					<XAxis dataKey="desktop" type="number" hide />
+					<XAxis dataKey="class" type="number" hide />
 					<ChartTooltip
 					cursor={false}
 					content={<ChartTooltipContent indicator="line" />}
 					/>
 					<Bar
-					dataKey="desktop"
+					dataKey="class"
 					layout="vertical"
-					fill="var(--color-desktop)"
+					fill="var(--color-class)"
 					radius={4}
 					>
 					<LabelList
-						dataKey="month"
+						dataKey="category"
 						position="insideLeft"
 						offset={8}
-						className="fill-[--color-label]"
+						className="text-white fill-[--color-label]"
 						fontSize={12}
 					/>
 					<LabelList
-						dataKey="desktop"
+						dataKey="class"
 						position="right"
 						offset={8}
 						className="fill-foreground"

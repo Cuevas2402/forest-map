@@ -13,25 +13,37 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
-const chartData = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-]
+import useZone from "@/hooks/useZone"
+import { TreesDist } from "@/interfaces/props"
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
+	heatlh: {
+		label: "Health",
+	},
+	forest: {
+		label: "Forest",
+		color: "hsl(var(--chart-2))",
+	},
 } satisfies ChartConfig
 
+
 export default function ZoneHealth() {
+
+	const {zoneData} = useZone();
+	const total = zoneData.classes.reduce((acc: number, classItem: TreesDist) => acc + classItem.total, 0);
+	const sub = zoneData.classes.reduce((acc: number, curr: TreesDist) => {
+		if ([1, 2, 3].includes(curr._id)) {
+			return acc + curr.total;
+		}
+		return acc;
+	}, 0);
+
+	const healthZone = [{ category: "forest", health: ((sub / total) * 100).toFixed(0), fill: "var(--color-forest)" }]
+
 	return (
 		<Card className="w-full h-full ">
 		<CardHeader className="mb-5 items-center pb-0">
-			<CardTitle>Radial Chart - Text</CardTitle>
+			<CardTitle>Zone health</CardTitle>
 		</CardHeader>
 		<CardContent className="flex-1 pb-0">
 			<ChartContainer
@@ -39,7 +51,7 @@ export default function ZoneHealth() {
 			className="mx-auto aspect-square max-h-[350px]"
 			>
 			<RadialBarChart
-				data={chartData}
+				data={healthZone}
 				startAngle={0}
 				endAngle={250}
 				innerRadius={80}
@@ -52,7 +64,7 @@ export default function ZoneHealth() {
 				className="first:fill-muted last:fill-background"
 				polarRadius={[86, 74]}
 				/>
-				<RadialBar dataKey="visitors" background cornerRadius={10} />
+				<RadialBar dataKey="health" background cornerRadius={10} />
 				<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
 				<Label
 					content={({ viewBox }) => {
@@ -69,14 +81,14 @@ export default function ZoneHealth() {
 							y={viewBox.cy}
 							className="fill-foreground text-4xl font-bold"
 							>
-							{chartData[0].visitors.toLocaleString()}
+							{healthZone[0].health.toLocaleString()+"%"}
 							</tspan>
 							<tspan
 							x={viewBox.cx}
 							y={(viewBox.cy || 0) + 24}
 							className="fill-muted-foreground"
 							>
-							Visitors
+								Healthy area
 							</tspan>
 						</text>
 						)

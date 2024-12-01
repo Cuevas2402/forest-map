@@ -9,6 +9,7 @@ import Forest from '@/interfaces/forest';
 const ForestContext = createContext<any>(undefined);
 
 const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
+	const keys : string[] = ["healthy", "light", "moderate", "several", "death"]
 
 	const [forest, setForest] = useState<Forest[]>([]);
 	const [classes, setClasses] = useState<TreesDist[][]>([]);
@@ -16,7 +17,6 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 	const [healthData, setHealthData] = useState<any>(null);
 	const [classesData, setClassesData] = useState<any>(null);
 	const [typesData, setTypesData] = useState<any>(null);
-	const [currZone, setCurrZone] = useState<number>(1);
 
 	const [coordenates, setCoordenates] = useState<any>(null);
 
@@ -34,11 +34,6 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 
 		return response.data;
 	};
-
-	const fetcherZone = async(url: string, Name: string, Zid: number) => {
-		const response = await client.post(url, {Name, Zid});
-		return response.data
-	}
 
 	const { data , error, isLoading } = useSWR(
 		['/forest/info', parseInt(id || '3')],
@@ -68,7 +63,6 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 
 			setHealthData([{ category: "forest", heatlh: (sub/total * 100).toFixed(0), fill: "var(--color-forest)" }])
 
-			const keys : string[] = ["healthy", "light", "moderate", "several", "death"]
 
 			setClassesData(classes[0].map((clss) => {
 
@@ -95,19 +89,6 @@ const ForestProvider: React.FC<ForestProviderProps> = ({ children }) => {
 	if (error) return <div>Error al cargar los datos</div>;
 
 	if (isLoading) return <Spinner />;
-
-
-	const { data : zoneData , error: zoneError, isLoading: zoneLoading} = useSWR(
-		['/forest/zone', forest[0].Name, currZone],
-		([url, Name, Zid]) => fetcherZone(url, Name, Zid)
-	);
-
-	if (zoneError) return <div>Error al cargar los datos</div>;
-
-	if (zoneLoading) return <Spinner />;
-
-
-
 
 
 	return (

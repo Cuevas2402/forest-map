@@ -266,7 +266,7 @@ func GetForestTypesByZone(name string, zid string) ([]primitive.M, error) {
 		{{
 			Key: "$group",
 			Value: bson.D{
-				{Key: "_id", Value: "$zones.trees.class"},
+				{Key: "_id", Value: "$zones.trees.species"},
 				{Key: "total", Value: bson.D{{Key: "$sum", Value: 1}}},
 			},
 		}},

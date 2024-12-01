@@ -12,49 +12,53 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 273 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+import useZone from "@/hooks/useZone"
+import { TypesDist } from "@/interfaces/props"
+
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig
+	total: {
+	  label: "Total",
+	  color: "hsl(var(--chart-1))",
+	},
+  } satisfies ChartConfig
 
 export default function ZoneTypes() {
-  return (
-    <Card className="w-fs Speciesl">
-      <CardHeader className="items-center">
-        <CardTitle>Trees Species</CardTitle>
-      </CardHeader>
-      <CardContent className="pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <RadarChart data={chartData}>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <PolarAngleAxis dataKey="month" />
-            <PolarGrid />
-            <Radar
-              dataKey="desktop"
-              fill="var(--color-desktop)"
-              fillOpacity={0.6}
-              dot={{
-                r: 4,
-                fillOpacity: 1,
-              }}
-            />
-          </RadarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
+	const {zoneData} = useZone();
+
+	const typesZone = zoneData.types.map((ty : TypesDist) => ({
+		species: ty._id,
+		total: ty.total
+	}))
+	return (
+		<Card className="w-fs Speciesl">
+
+			<CardHeader className="items-center">
+				<CardTitle>Trees Species</CardTitle>
+			</CardHeader>
+
+			<CardContent className="pb-0">
+				<ChartContainer
+				config={chartConfig}
+				className="mx-auto aspect-square max-h-[250px]"
+				>
+				<RadarChart data={typesZone}>
+					<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+					<PolarAngleAxis dataKey="species" />
+					<PolarGrid />
+					<Radar
+					dataKey="total"
+					fill="var(--color-total)"
+					fillOpacity={0.6}
+					dot={{
+						r: 4,
+						fillOpacity: 1,
+					}}
+					/>
+				</RadarChart>
+				</ChartContainer>
+			</CardContent>
+
+		</Card>
+	)
 }
