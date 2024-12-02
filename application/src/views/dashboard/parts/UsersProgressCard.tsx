@@ -1,21 +1,18 @@
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function ProgressCard(){
+export default function UsersProgressCard(){
 	return (
 		<>
 			<Card x-chunk="dashboard-05-chunk-1">
 				<CardHeader className="pb-2">
-				<CardDescription>This Week</CardDescription>
-				<CardTitle className="text-4xl">$1,329</CardTitle>
+				<CardDescription>Active Users</CardDescription>
+				<CardTitle className="text-4xl">4</CardTitle>
 				</CardHeader>
 				<CardContent>
-				<div className="text-xs text-muted-foreground">
-					+25% from last week
-				</div>
 				</CardContent>
 				<CardFooter>
-				<Progress value={25} aria-label="25% increase" />
+				<Progress value={70} aria-label="increase" />
 				</CardFooter>
 			</Card>
 		</>

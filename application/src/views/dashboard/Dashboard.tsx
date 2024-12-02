@@ -1,10 +1,11 @@
-import ProgressCard from "./parts/ProgressCard"
 import LinkCard from "./parts/LinkCard"
 import TableLinkCard from "./parts/TableLinkCard"
 import CardPie from "./parts/CardPie"
 import BarGraph from "@/components/Graphs/BarGraph"
 import CardRadar from "./parts/CardRadar"
 import CardNegative from "./parts/CardNegative"
+import UsersProgressCard from "./parts/UsersProgressCard"
+import CompaniesProgressCard from "./parts/CompaniesProgressCard"
 
 export default function Dashboard(){
 
@@ -18,9 +19,11 @@ export default function Dashboard(){
 
 						<LinkCard/>
 
-						<ProgressCard/>
+						<UsersProgressCard/>
 
-						<ProgressCard/>
+						<CompaniesProgressCard/>
+
+
 
 					</div>
 
